@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// --- THE DATA SWARM CANVAS ENGINE ---
+// THE DATA SWARM CANVAS ENGINE
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
 

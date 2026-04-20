@@ -1,7 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Download, Terminal as TerminalIcon } from 'lucide-react';
+import { Download, Terminal as TerminalIcon } from 'lucide-react'; 
 import profilePic from '../assets/Landing_Photo.png';
+
+// Data within the terminal 
+const bootSequence = [
+  "> Initializing Portfolio.exe...",
+  "> Loading data points... [OK]",
+  "> Importing nodes... [OK]",
+  "> Portfolio ready."
+];
 
 // ACTUARIAL MATRIX BACKGROUND 
 const MatrixBackground = () => {
@@ -13,13 +21,14 @@ const MatrixBackground = () => {
     let animationFrameId;
 
     const resize = () => {
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
+      // Added fallback to window dimensions if parent is not yet computed
+      canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
+      canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
     };
+    
     window.addEventListener('resize', resize);
     resize();
 
-    // The data to sweep. Grey math symbols for depth.
     const matrixSymbols = ['μ', 'σ²', 'VaR', 'E[X]', 'p(x)', 'λ', 'ρ', 'β', '∑', '∫', 'd/dt', '0.0034', '1.09', 'N(0,1)'];
     const particles = [];
     const numParticles = Math.floor((canvas.width * canvas.height) / 1000); 
@@ -40,8 +49,12 @@ const MatrixBackground = () => {
 
       particles.forEach(p => {
         p.y -= p.speedY;
+        
+        // BUG FIX: Added boundary checks for both Y and X axes to handle window resizing properly
         if (p.y < 0) p.y = canvas.height;
-        ctx.fillStyle = `rgba(148, 163, 184, ${p.opacity})`; // slate-400 color
+        if (p.x > canvas.width) p.x = Math.random() * canvas.width; 
+        
+        ctx.fillStyle = `rgba(148, 163, 184, ${p.opacity})`;
         ctx.fillText(p.symbol, p.x, p.y);
       });
       animationFrameId = requestAnimationFrame(render);
@@ -58,6 +71,7 @@ const MatrixBackground = () => {
   return (
     <canvas 
       ref={canvasRef} 
+      aria-hidden="true" // Added for accessibility
       className="absolute inset-0 w-full h-full pointer-events-none opacity-50 z-0"
     />
   );
@@ -72,7 +86,6 @@ const containerVariants = {
   },
 };
 
-// Standard top-to-bottom drop text
 const itemVariants = {
   hidden: { opacity: 0, y: -50 }, 
   visible: { 
@@ -82,9 +95,8 @@ const itemVariants = {
   },
 };
 
-// Exaggerated top-to-bottom drop specifically for the catchphrase
 const catchphraseVariants = {
-  hidden: { opacity: 0, y: -120 }, // Starts much higher up
+  hidden: { opacity: 0, y: -120 }, 
   visible: { 
     opacity: 1, 
     y: 0, 
@@ -97,13 +109,6 @@ const catchphraseVariants = {
 export default function Hero() {
   const [bootStep, setBootStep] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
-
-  const bootSequence = [
-    "> Initializing Portfolio.exe...",
-    "> Loading data points... [OK]",
-    "> Importing nodes... [OK]",
-    "> Portfolio ready."
-  ];
 
   useEffect(() => {
     if (bootStep < bootSequence.length) {
@@ -118,7 +123,7 @@ export default function Hero() {
   return (
     <div className="min-h-screen w-full bg-[#0a0f1c] flex flex-col pt-20 md:pt-0 overflow-hidden relative selection:bg-cyan-500/30">
       
-      {/* THE TERMINAL & EXPANSION */}
+      {/* THE TERMINAL */}
       <motion.div
         layout 
         transition={{ duration: 0.8, ease: "easeInOut" }}
@@ -136,7 +141,7 @@ export default function Hero() {
               <span className="text-xs font-mono text-slate-500">root@brian-chege:~</span>
             </div>
 
-            <div className="p-6 font-mono text-sm md:text-base absolute inset-0 z-30 pt-8">
+            <div className="p-6 font-mono text-sm md:text-base absolute inset-0 z-30 pt-12">
               {bootSequence.slice(0, bootStep).map((line, i) => (
                 <motion.div
                   key={i}
@@ -169,7 +174,6 @@ export default function Hero() {
             
             {/* PHOTO PLACEHOLDER */}
             <motion.div
-              // 100vw to start completely off-screen to the right
               initial={{ x: "100vw", opacity: 0 }} 
               animate={{ x: 0, opacity: 1 }}
               transition={{ 
@@ -179,6 +183,7 @@ export default function Hero() {
               }}
               className="w-full md:w-[30%] min-h-[60vh] md:min-h-screen bg-slate-900/40 relative flex items-center justify-center p-6 sm:p-10 md:p-8 lg:p-12 overflow-hidden border-b md:border-b-0 md:border-r border-slate-800 z-30"
               >
+                
                 <div className="relative group overflow-hidden shadow-2xl rounded-2xl border border-slate-700 bg-slate-800/50 w-full max-w-sm mx-auto aspect-4/5 md:max-w-none md:mx-0 md:aspect-auto md:w-full md:h-[70vh]"> 
                     <img 
                         src={profilePic} 
@@ -186,7 +191,6 @@ export default function Hero() {
                         className="w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-all duration-700"
                     />
 
-                    {/* Keeping the tech metadata overlay on top of the image */}
                     <div className="absolute bottom-4 left-4 font-mono text-xs text-slate-400 p-2 bg-slate-950/80 backdrop-blur-sm rounded-md border border-slate-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         B.CHEGE
                     </div>
@@ -228,21 +232,18 @@ export default function Hero() {
                 </motion.p>
 
                 {/* Action Buttons */}
-                 {/* Action Buttons (Functional Links) */}
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 pt-4">
                   
-                  {/* Scrolls smoothly to the <section id="Work"> in your App.jsx */}
                   <a 
-                    href="#Work"
+                    href="#work"
                     className="group flex items-center justify-center gap-2 px-8 py-4 bg-[#4f46e5] hover:bg-[#4338ca] text-white rounded-lg font-semibold transition-colors"
                   >
                     View My Work
                     <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
                   </a>
                   
-                  {/* Triggers a direct download of the file in your public folder */}
                   <a 
-                    href="/Brian-Chege-CV.pdf" 
+                    href="/Brian_Chege_CV.pdf" 
                     download="Brian_Chege_CV.pdf"
                     className="group flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-slate-100 text-slate-950 rounded-lg font-semibold transition-colors"
                   >
