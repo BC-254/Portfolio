@@ -6,7 +6,7 @@ import { AnimatePresence,motion } from 'framer-motion';
 import NavBar from './components/NavBar';
 import SplashScreen from './components/SplashScreen';
 import Hero from './components/Hero';
-// import SkillsPrism from './components/SkillsPrism';
+import WhatIBring from './components/WhatIBring';
 // import Toolkit from './components/Toolkit';
 // import Projects from './components/Projects';
 // import SheriaLens from './components/SheriaLens';
@@ -45,12 +45,11 @@ export default function App() {
                 <main>
                   <div id="Home"><Hero /></div>
                   
-                  {/* <section id="Skills" className="py-24 space-y-32">
-                    <SkillsPrism />
-                    <Toolkit />
-                  </section>
+                  <section id="Skills">
+                    <WhatIBring />                    
+                  </section> 
 
-                  <section id="Work" className="py-24 bg-slate-900/50">
+                  {/* <section id="Work" className="py-24 bg-slate-900/50">
                     <Projects />
                     <SheriaLens />
                     <RiskDashboard />

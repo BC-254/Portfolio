@@ -12,9 +12,9 @@ export default function NavBar() {
   const closeMenu = () => setIsMobileMenuOpen(false);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
+    { name: 'Home', path: '/', isAnchor: true},
     { name: 'About', path: '/about' },
-    { name: 'Skills', path: '/#skills', isAnchor: true },
+    { name: 'Skills', path: '/#Skills', isAnchor: true },
     { name: 'Work', path: '/#work', isAnchor: true },
     { name: 'Contact', path: '/#contact', isAnchor: true },
   ];
@@ -35,7 +35,10 @@ export default function NavBar() {
             {navLinks.map((link) => (
               <li key={link.name} className="group relative cursor-pointer">
                 {isHomePage && link.isAnchor ? (
-                  <a href={link.path.replace('/', '')} className="hover:text-cyan-400 transition-colors px-2 py-1 flex items-center">
+                  <a 
+                    href={link.path === '/' ? '#' : link.path.replace('/', '')} 
+                    onClick={link.path === '/' ? () => window.scrollTo({ top: 0, behavior: 'smooth' }) : undefined}
+                    className="hover:text-cyan-400 transition-colors px-2 py-1 flex items-center">
                     <span className="opacity-0 group-hover:opacity-100 text-cyan-500 mr-1 transition-opacity">[</span>
                     {link.name}
                     <span className="opacity-0 group-hover:opacity-100 text-cyan-500 ml-1 transition-opacity">]</span>
@@ -54,10 +57,10 @@ export default function NavBar() {
           {/* MOBILE TOGGLE ICON */}
           <button 
             className="md:hidden text-cyan-500 hover:text-cyan-300 transition-colors"
-            onClick={() => setIsMobileMenuOpen(true)}
-          >
-            <Menu size={28} />
-          </button>
+            onClick={() => setIsMobileMenuOpen(prev => !prev)}
+        >
+            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
 
         </div>
       </nav>
@@ -89,7 +92,7 @@ export default function NavBar() {
                   whileTap={{ scale: 0.95 }}
                 >
                   {isHomePage && link.isAnchor ? (
-                    <a href={link.path.replace('/', '')} onClick={closeMenu} className="hover:text-cyan-400 transition-colors flex items-center justify-center">
+                    <a href={link.path === '/' ? '#' : link.path.replace('/', '')} onClick={link.path === '/' ? () => window.scrollTo({ top: 0, behavior: 'smooth' }) : undefined} className="hover:text-cyan-400 transition-colors px-2 py-1 flex items-center">
                       <span className="text-cyan-500 mr-2">[</span>
                       {link.name}
                       <span className="text-cyan-500 ml-2">]</span>

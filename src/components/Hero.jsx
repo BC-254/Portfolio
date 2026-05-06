@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Download, Terminal as TerminalIcon } from 'lucide-react'; 
-import profilePic from '../assets/Landing_Photo.png';
+import profilePic from '../assets/Profile_Photo.png';
 
 // Data within the terminal 
 const bootSequence = [
@@ -21,7 +21,7 @@ const MatrixBackground = () => {
     let animationFrameId;
 
     const resize = () => {
-      // Added fallback to window dimensions if parent is not yet computed
+      // Fallback to window dimensions if parent is not yet computed
       canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
       canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
     };
@@ -50,7 +50,7 @@ const MatrixBackground = () => {
       particles.forEach(p => {
         p.y -= p.speedY;
         
-        // BUG FIX: Added boundary checks for both Y and X axes to handle window resizing properly
+        // Boundary checks for both Y and X axes to handle window resizing properly
         if (p.y < 0) p.y = canvas.height;
         if (p.x > canvas.width) p.x = Math.random() * canvas.width; 
         
@@ -107,15 +107,19 @@ const catchphraseVariants = {
 
 // THE MAIN HERO SECTION
 export default function Hero() {
-  const [bootStep, setBootStep] = useState(0);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const alreadySeen = sessionStorage.getItem('portfolio-boot-seen') === 'true';
+  const [bootStep, setBootStep] = useState(alreadySeen ? bootSequence.length : 0);
+  const [isExpanded, setIsExpanded] = useState(alreadySeen);;
 
   useEffect(() => {
     if (bootStep < bootSequence.length) {
       const timer = setTimeout(() => setBootStep(prev => prev + 1), 600);
       return () => clearTimeout(timer);
     } else if (bootStep === bootSequence.length && !isExpanded) {
-      const expandTimer = setTimeout(() => setIsExpanded(true), 800);
+      const expandTimer = setTimeout(() => {
+        setIsExpanded(true);
+        sessionStorage.setItem('portfolio-boot-seen', 'true');
+      }, 800);
       return () => clearTimeout(expandTimer);
     }
   }, [bootStep, isExpanded]);
@@ -227,8 +231,7 @@ export default function Hero() {
 
                 {/* Catchphrase */}
                 <motion.p variants={catchphraseVariants} className="text-slate-300 text-lg md:text-xl font-sans font-light leading-relaxed max-w-2xl mb-12">
-                  Not just analyzing the risk, I engineer the prediction
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 inline-block ml-3 animate-pulse"></span>
+                  Not just analyzing the risk, I engineer the prediction. 
                 </motion.p>
 
                 {/* Action Buttons */}
