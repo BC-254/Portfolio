@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // IMPORT ROUTER
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; 
 import { AnimatePresence,motion } from 'framer-motion';
 
 // Importing all components
@@ -16,11 +16,35 @@ import WhatIBring from './components/WhatIBring';
 // import Footer from './components/Footer';
 // import About from './components/About';
 
+function ScrollToSection() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const { scrollTo } = location.state || {};
+    if (!scrollTo) return;
+
+    //Small delay for home page to finish rendering before scrolling
+    const timer = setTimeout(() => {
+      document.getElementById(scrollTo)?.scrollIntoView({ behavior: 'smooth' });
+      //Wipe the state  so the browser back button doesn't re-trigger the scroll
+      window.history.replaceState({}, '');
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [location]);
+
+  return null;
+}
+
 export default function App() {
-  const [isInitialized, setIsInitialized] = useState(false);
+  // Prevent the splash screen from showing on every page reload
+  const [isInitialized, setIsInitialized] = useState(
+    () => sessionStorage.getItem('portfolio-boot-seen') === 'true'
+  );
 
   return (
     <Router>
+      <ScrollToSection />
       <div className="bg-slate-950 text-slate-200 min-h-screen font-sans selection:bg-cyan-500/30 overflow-x-hidden">
         
         {/* 1. The Curtain Reveal */}
@@ -37,8 +61,7 @@ export default function App() {
             
           {/* 2. The Main Portfolio UI */}
           
-            <NavBar /> 
-            
+            <NavBar />             
             <Routes>
               {/* Main Portfolio Page */}
               <Route path="/" element={
@@ -64,8 +87,7 @@ export default function App() {
                 </main>
               } />
 
-              {/* THE ABOUT PAGE ROUTE
-              <Route path="/about" element={<About />} /> */}
+              {/* THE ABOUT PAGE ROUTE */}
             </Routes>
           </motion.div>
         )}

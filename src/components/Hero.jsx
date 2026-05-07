@@ -107,9 +107,9 @@ const catchphraseVariants = {
 
 // THE MAIN HERO SECTION
 export default function Hero() {
-  const alreadySeen = sessionStorage.getItem('portfolio-boot-seen') === 'true';
+  const alreadySeen = sessionStorage.getItem('portfolio-hero-seen') === 'true';
   const [bootStep, setBootStep] = useState(alreadySeen ? bootSequence.length : 0);
-  const [isExpanded, setIsExpanded] = useState(alreadySeen);;
+  const [isExpanded, setIsExpanded] = useState(alreadySeen);
 
   useEffect(() => {
     if (bootStep < bootSequence.length) {
@@ -118,7 +118,7 @@ export default function Hero() {
     } else if (bootStep === bootSequence.length && !isExpanded) {
       const expandTimer = setTimeout(() => {
         setIsExpanded(true);
-        sessionStorage.setItem('portfolio-boot-seen', 'true');
+        sessionStorage.setItem('portfolio-hero-seen', 'true');
       }, 800);
       return () => clearTimeout(expandTimer);
     }

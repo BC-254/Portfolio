@@ -111,14 +111,13 @@ export default function SplashScreen({ onInitialize }) {
     setIsUnlocking(true);
   }, [isUnlocking]);
 
-  
+  // Ensuring Splashscreen doesn't show on every page reload.
   useEffect(() => {
     if (!isUnlocking) return;
-
+    sessionStorage.setItem('portfolio-boot-seen', 'true');
     const timer = setTimeout(() => {
       onInitialize();
     }, 2600);
-
     return () => clearTimeout(timer);
   }, [isUnlocking, onInitialize]);
 

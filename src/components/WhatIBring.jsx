@@ -191,7 +191,7 @@ export default function WhatIBring() {
       
       {/* The WIB Section */}
       <section 
-        className="relative min-h-screen w-full flex flex-col items-center pt-24 px-6 pb-12 overflow-hidden transition-colors duration-900 ease-in-out select-auto box-border bg-[#050505] before:absolute before:inset-0 before:bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] before:bg-size:[16px_16px] before:bg-position:[0_0] before:pointer-events-none before:z-0" 
+        className="relative min-h-screen w-full flex flex-col items-center pt-24 px-6 pb-12 overflow-hidden transition-colors duration-900 ease-in-out select-auto box-border before:absolute before:inset-0 before:bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] before:bg-size:[16px_16px] before:bg-position:[0_0] before:pointer-events-none before:z-0" 
         style={{ backgroundColor: skill.ambientBg }}
       >
        {/* Section titles and eyebrow text */}
@@ -241,7 +241,7 @@ export default function WhatIBring() {
                         transform: `rotateY(${i * 120}deg) translateZ(var(--prism-tz))`,
                         '--face-color': s.color,
                         '--face-rgb':   s.rgb,
-                        background: `linear-gradient(145deg, rgba(${s.rgb}, 0.12) 0%, rgba(${s.rgb}, 0.04) 40%, rgba(240, 141, 2, 0.08) 100%)`
+                        background: `linear-gradient(145deg, rgba(${s.rgb}, 0.12) 0%, rgba(${s.rgb}, 0.04) 40%, rgba(${s.rgb}, 0.08) 100%)`
                       }}
                       onClick={() => {if (window.innerWidth < 1024) setActiveSkill(s);}}
                       onKeyDown={(e) => handleKeyDown(e, s, i)}

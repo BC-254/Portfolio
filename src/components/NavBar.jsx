@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react'; 
 
 export default function NavBar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -18,7 +19,57 @@ export default function NavBar() {
     { name: 'Work', path: '/#work', isAnchor: true },
     { name: 'Contact', path: '/#contact', isAnchor: true },
   ];
+  
+  // Single handler for all anchor links from any page
+  const handleAnchorClick = (e, link) => {
+    e.preventDefault();
+    closeMenu();
+    
+    //Home link scrolls to top, others scroll to their section
+    const sectionId = link.path === '/' ? null : link.path.replace('/#', '');
+    if (isHomePage){
+      if(!sectionId) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      //Navigate to home and pass the target section
+      navigate('/', { state: { scrollTo: sectionId } });
+    }
+  };
 
+  // Shared link renderer keeps desktop and mobile markup dry
+  const renderLink = (link, isMobile = false) => {
+    const bracketBase  = isMobile
+      ? 'text-cyan-500'
+      : 'text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity';
+
+      const inner = (
+        <>
+        <span className={`${bracketBase} mr-1`}>[</span>
+        {link.name}
+        <span className={`${bracketBase} ml-1`}>]</span>
+        </>
+      );
+
+      const cls = 'hover:text-cyan-400 transition-colors px-2 py-1 flex items-center';
+
+      if (link.isAnchor) {
+        return (
+          <a href={link.path} onClick={(e) => handleAnchorClick(e, link)} className={cls}>
+            {inner}
+          </a>
+        );
+      }
+      return (
+        <Link to={link.path} onClick={closeMenu} className={cls}>
+          {inner}
+        </Link>
+      );
+    };
+        
+  
   return (
     <>
       {/* DESKTOP & MOBILE TOP BAR*/}
@@ -34,25 +85,11 @@ export default function NavBar() {
           <ul className="hidden md:flex space-x-8 text-sm font-mono text-slate-400">
             {navLinks.map((link) => (
               <li key={link.name} className="group relative cursor-pointer">
-                {isHomePage && link.isAnchor ? (
-                  <a 
-                    href={link.path === '/' ? '#' : link.path.replace('/', '')} 
-                    onClick={link.path === '/' ? () => window.scrollTo({ top: 0, behavior: 'smooth' }) : undefined}
-                    className="hover:text-cyan-400 transition-colors px-2 py-1 flex items-center">
-                    <span className="opacity-0 group-hover:opacity-100 text-cyan-500 mr-1 transition-opacity">[</span>
-                    {link.name}
-                    <span className="opacity-0 group-hover:opacity-100 text-cyan-500 ml-1 transition-opacity">]</span>
-                  </a>
-                ) : (
-                  <Link to={link.path} className="hover:text-cyan-400 transition-colors px-2 py-1 flex items-center">
-                    <span className="opacity-0 group-hover:opacity-100 text-cyan-500 mr-1 transition-opacity">[</span>
-                    {link.name}
-                    <span className="opacity-0 group-hover:opacity-100 text-cyan-500 ml-1 transition-opacity">]</span>
-                  </Link>
-                )}
+                {renderLink(link)}
               </li>
             ))}
           </ul>
+
 
           {/* MOBILE TOGGLE ICON */}
           <button 
@@ -61,7 +98,6 @@ export default function NavBar() {
         >
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
-
         </div>
       </nav>
 
@@ -79,6 +115,7 @@ export default function NavBar() {
             <button 
               className="absolute top-6 right-6 text-cyan-500 hover:text-cyan-300 transition-colors"
               onClick={closeMenu}
+              aria-label = "Close menu"
             >
               <X size={32} />
             </button>
@@ -91,19 +128,7 @@ export default function NavBar() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {isHomePage && link.isAnchor ? (
-                    <a href={link.path === '/' ? '#' : link.path.replace('/', '')} onClick={link.path === '/' ? () => window.scrollTo({ top: 0, behavior: 'smooth' }) : undefined} className="hover:text-cyan-400 transition-colors px-2 py-1 flex items-center">
-                      <span className="text-cyan-500 mr-2">[</span>
-                      {link.name}
-                      <span className="text-cyan-500 ml-2">]</span>
-                    </a>
-                  ) : (
-                    <Link to={link.path} onClick={closeMenu} className="hover:text-cyan-400 transition-colors flex items-center justify-center">
-                      <span className="text-cyan-500 mr-2">[</span>
-                      {link.name}
-                      <span className="text-cyan-500 ml-2">]</span>
-                    </Link>
-                  )}
+                  {renderLink(link, true)}
                 </motion.li>
               ))}
             </ul>
