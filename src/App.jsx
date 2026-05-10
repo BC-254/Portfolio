@@ -2,15 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; 
 import { AnimatePresence,motion } from 'framer-motion';
 
-// Importing all components
+// Importing my portfolio components
 import NavBar from './components/NavBar';
 import SplashScreen from './components/SplashScreen';
 import Hero from './components/Hero';
 import WhatIBring from './components/WhatIBring';
-// import Toolkit from './components/Toolkit';
-// import Projects from './components/Projects';
-// import SheriaLens from './components/SheriaLens';
-// import RiskDashboard from './components/RiskDashboard';
+import Projects from './components/Projects';
 // import Contact from './components/Contact';
 // import Terminal from './components/Terminal';
 // import Footer from './components/Footer';
@@ -72,20 +69,18 @@ export default function App() {
                     <WhatIBring />                    
                   </section> 
 
-                  {/* <section id="Work" className="py-24 bg-slate-900/50">
-                    <Projects />
-                    <SheriaLens />
-                    <RiskDashboard />
+                  <section id="Work" className="py-24 bg-slate-900/50">
+                    <Projects />                  
                   </section>
 
-                  <section id="Contact" className="py-24">
+                  {/* <section id="Contact" className="py-24">
                     <Contact />
                     <Terminal />
                   </section>
 
                   <Footer /> */}
                 </main>
-              } />
+              } /> 
 
               {/* THE ABOUT PAGE ROUTE */}
             </Routes>

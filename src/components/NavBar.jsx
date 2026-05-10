@@ -16,7 +16,7 @@ export default function NavBar() {
     { name: 'Home', path: '/', isAnchor: true},
     { name: 'About', path: '/about' },
     { name: 'Skills', path: '/#Skills', isAnchor: true },
-    { name: 'Work', path: '/#work', isAnchor: true },
+    { name: 'Work', path: '/#Work', isAnchor: true },
     { name: 'Contact', path: '/#contact', isAnchor: true },
   ];
   
