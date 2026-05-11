@@ -7,13 +7,13 @@ const PROJECTS = [
     title: "SheriaLens",
     tagline: "Kenyan Legal Assistant Chatbot",
     description:
-      "Justice isn't blind; it just needs the right lens. SheriaLens is a chatbot that deciphers complex legalese into clear, actionable insights, bridging the gap between the code of law and the code of the ordinary mwananchi. SheriaLens is thus an AI-powered assistant that turns 'Terms and Conditions' into plain English. Sherialens is still a work in progress, but the demo version can be accessed via the link below.",
+      "Justice isn't blind; it just needs the right lens. SheriaLens is a chatbot that deciphers complex legalese into clear, actionable insights, bridging the gap between the code of law and the code of the ordinary mwananchi. SheriaLens is thus an AI-powered assistant that turns hard legal text into plain English. Sherialens is still a work in progress, but the demo version can be accessed via the link below.",
     skills: ["Python", "NLP", "Transformers", "FastAPI", "RAG", "ChromaDb"],
     github: "https://github.com/BC-254/SheriaLens",
     live: "https://huggingface.co/spaces/BC-254/SheriaLens2",
     glow: "59,130,246",        // blue
     glowClass: "from-blue-500/20 via-blue-400/10",
-    borderGlow: "border-blue-500/50 sm:border-white/10 sm:hover:border-blue-500/50",
+    borderGlow: "border-white/90 sm:border-white/10 sm:hover:border-blue-500/50",
     badgeColor: "bg-blue-500/10 text-blue-300 border-blue-500/20",
     texture: "flag",   
   },
@@ -29,7 +29,7 @@ const PROJECTS = [
     comingSoon: true,
     glow: "239,68,68",        // red
     glowClass: "from-red-500/20 via-red-400/10",
-    borderGlow: "border-red-500/50 sm:border-white/10 sm:hover:border-red-500/50",
+    borderGlow: "border-white/90 sm:border-white/10 sm:hover:border-red-500/50",
     badgeColor: "bg-red-500/10 text-red-300 border-red-500/20",
     texture: "scatter",
     
@@ -46,22 +46,22 @@ const PROJECTS = [
     comingSoon: true,
     glow: "34,197,94",       // green
     glowClass: "from-green-500/20 via-green-400/10",
-    borderGlow: "border-green-500/50 sm:border-white/10 sm:hover:border-green-500/50",
+    borderGlow: "border-white/90 sm:border-white/10 sm:hover:border-green-500/50",
     badgeColor: "bg-green-500/10 text-green-300 border-green-500/20",
-    texture: "grain",   
+    texture: "dots",   
   },
 ];
 
 // Sherialens card Kenyan Flag background
 function KenyanFlagOverlay() {
   return (
-    <div className="absolute inset-0 opacity-15 pointer-events-none overflow-hidden rounded-2xl mix-blend-overlay">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
       <div className="absolute inset-0 flex flex-col transform -skew-y-12 scale-125 origin-center">
-        <div className="flex-3 bg-black" />
-        <div className="h-2 bg-white" />
-        <div className="flex-3 bg-[#BB0000]" />
-        <div className="h-2 bg-white" />
-        <div className="flex-3 bg-[#006600]" />
+        <div className="flex-3 bg-[#1a1a1a]/30" />   {/* Black stripe */}
+        <div className="h-3 bg-white/30" />   {/* White stripe */}
+        <div className="flex-3 bg-[#BB0000]/20" />
+        <div className="h-3 bg-white/30" />
+        <div className="flex-3 bg-[#006600]/20" />
       </div>
       {/* Abstract Maasai shield in the center */}
       <div className="absolute inset-0 flex items-center justify-center">
@@ -81,7 +81,7 @@ function ScatterPattern() {
   }));
   return (
     <svg
-      className="absolute inset-0 w-full h-full opacity-30"
+      className="absolute inset-0 w-full h-full opacity-60"
       viewBox="0 0 100 100"
       preserveAspectRatio="none"
     >
@@ -106,18 +106,15 @@ function ScatterPattern() {
 }
 
 // Movielens recommender card background
-function GrainOverlay() {
+function DotGrid() {
   return (
-    <svg
-      className="absolute inset-0 w-full h-full opacity-30 pointer-events-none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <filter id="grain-filter">
-        <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch" />
-        <feColorMatrix type="saturate" values="0" />
-        <feBlend in="SourceGraphic" mode="overlay" />
-      </filter>
-      <rect width="100%" height="100%" filter="url(#grain-filter)" opacity="0.12" fill="rgb(249,115,22)" />
+    <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1" fill="rgb(34,197,94)" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#dots)" />
     </svg>
   );
 }
@@ -186,7 +183,7 @@ function ProjectCard({ project, index }) {
         className={`
           relative overflow-hidden rounded-2xl
           bg-[#0a0f18]/80 backdrop-blur-sm
-          border border-white/10 ${project.borderGlow}
+          border sm:border  border-white/10 ${project.borderGlow}
           transition-all duration-500
           hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/50  
           flex flex-col h-full
@@ -204,7 +201,7 @@ function ProjectCard({ project, index }) {
             />
         {project.texture === "flag" && <KenyanFlagOverlay />}
         {project.texture === "scatter" && <ScatterPattern />}
-        {project.texture === "grain" && <GrainOverlay />}
+        {project.texture === "dots" && <DotGrid />}
 
         <div className={`h-1 w-full bg-linear-to-r ${project.glowClass} to-transparent`} />
         {/* Content of the card */}
@@ -284,7 +281,7 @@ export default function Projects() {
 
   // Main layout and Background
   return (
-    <section id="featured-projects" className="relative pt-8 pb-0 sm:pt-8 sm:pb-0 px-4 sm:px-6 lg:px-8 min-h-screen text-white">
+    <section id="featured-projects" className="relative pt-2 pb-0 -mt-8 sm:-mt-12 px-4 sm:px-6 lg:px-8 h-fit text-white">
       {/* Ambient background behind the cards*/}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-blue-500/20 blur-[120px]" />

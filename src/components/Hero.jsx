@@ -238,7 +238,7 @@ export default function Hero() {
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 pt-4">
                   
                   <a 
-                    href="#work"
+                    href="#Work"
                     className="group flex items-center justify-center gap-2 px-8 py-4 bg-[#4f46e5] hover:bg-[#4338ca] text-white rounded-lg font-semibold transition-colors"
                   >
                     View My Work
