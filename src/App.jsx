@@ -8,6 +8,7 @@ import SplashScreen from './components/SplashScreen';
 import Hero from './components/Hero';
 import WhatIBring from './components/WhatIBring';
 import Projects from './components/Projects';
+import DeepDive from './components/deepDive';
 // import Contact from './components/Contact';
 // import Terminal from './components/Terminal';
 // import Footer from './components/Footer';
@@ -71,6 +72,10 @@ export default function App() {
 
                   <section id="Work" className="py-24 bg-slate-900/50">
                     <Projects />                  
+                  </section>
+
+                  <section id="deepDive">
+                    <DeepDive />
                   </section>
 
                   {/* <section id="Contact" className="py-24">
