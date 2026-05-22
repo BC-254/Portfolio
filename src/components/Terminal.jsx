@@ -1,8 +1,279 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { BRIAN_CONTEXT, EASTER_EGGS, BOOT_SEQUENCE } from "./brianContext";
+import { BRIAN_CONTEXT, EASTER_EGGS, BOOT_SEQUENCE, OFFER_LETTER_PROMPT} from "./brianContext";
+import emailjs from "@emailjs/browser";
+
+const EMAILJS_SERVICE_ID  = "service_f5naa8d";   
+const EMAILJS_TEMPLATE_ID = "template_2qw3hzt";  
+const EMAILJS_PUBLIC_KEY  = "JczN8ZuvvlJQQrqw9";
+const BRIAN_EMAIL         = "bchege55200@gmail.com";
+ 
+function HireModal({ onClose, onSent }) {
+  const [step, setStep]       = useState("form");   // "form" | "preview" | "sending" | "done" | "error"
+  const [fields, setFields]   = useState({
+    company: "", role: "", department: "", salary: "",
+    benefits: "", duration: "", startDate: "", managerName: "", 
+    yourEmail: "",notes: "",
+  });
+  
+  const [letter, setLetter]   = useState("");
+  const [errMsg, setErrMsg]   = useState("");
+ 
+  const set = (k) => (e) => setFields((p) => ({ ...p, [k]: e.target.value }));
+ 
+  // Generating offer letter with Groq
+  const handleGenerate = useCallback(async () => {
+    if (!fields.company || !fields.role || !fields.salary || !fields.duration || !fields.yourEmail) {
+      setErrMsg("Company, Role, Salary, Duration and Your Email are required.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.yourEmail)) {
+      setErrMsg("Please enter a valid email address.");
+      return;
+    }
+    setErrMsg("");
+    setStep("generating"); // reuse "sending" label for "generating"
+ 
+    try {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "llama-3.1-8b-instant",
+          max_tokens: 900,
+          temperature: 0.4,
+          messages: [{ role: "user", content: OFFER_LETTER_PROMPT(fields) }],
+        }),
+      });
+ 
+      const data = await response.json();
+      if (!response.ok) throw new Error(data?.error?.message || "Groq error");
+ 
+      const text = data?.choices?.[0]?.message?.content || "";
+      setLetter(text.trim());
+      setStep("preview");
+    } catch (err) {
+      setErrMsg(`Letter generation failed: ${err.message}`);
+      setStep("form");
+    }
+  }, [fields]);
+ 
+  // Sending the letter via EmailJS
+  const handleSend = useCallback(async () => {
+    setStep("sending");
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_company: fields.company,
+          role:         fields.role,
+          offer_letter: letter,
+          to_email:     BRIAN_EMAIL,
+          reply_to:     fields.yourEmail,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+      setStep("done");
+      // Notify Terminal so it can print the confirmation line
+      onSent(`offer_letter.txt → ${BRIAN_EMAIL}  ✓  awaiting Brian's review`);
+    } catch (err) {
+      setErrMsg(`Email failed: ${err.message}`);
+      setStep("preview");
+    }
+  }, [fields, letter, onSent]);
+ 
+  // Shared input style — matches terminal's dark palette
+  const inputCls =
+    "w-full bg-[#0d0d0b] border border-[rgba(200,185,140,0.18)] rounded px-3 py-2 " +
+    "text-white text-sm placeholder-[#3a3a34] focus:outline-none " +
+    "focus:border-[rgba(200,185,140,0.5)] transition-colors duration-200 font-['DM_Mono',monospace]";
+ 
+  const labelCls = "block text-[0.6rem] tracking-[0.15em] text-[#c8b98c] uppercase mb-1";
+ 
+  return (
+    // Backdrop
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.82)", backdropFilter: "blur(6px)" }}
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      {/* Modal window — styled to match the terminal aesthetic */}
+      <div
+        className="relative w-full max-w-lg max-h-[90vh] flex flex-col rounded-xl overflow-hidden"
+        style={{
+          background: "#0d0d0b",
+          border: "1px solid rgba(200,185,140,0.18)",
+          boxShadow: "0 0 60px rgba(200,185,140,0.06)",
+        }}
+      >
+        {/* Title bar — mirrors Terminal's title bar */}
+        <div className="flex items-center gap-3 px-4 py-3 bg-[#161614] border-b border-[rgba(200,185,140,0.12)] shrink-0">
+          <div className="flex gap-1.5">
+            <button onClick={onClose} className="w-3 h-3 rounded-full bg-[#FF5F57] hover:opacity-80 transition-opacity" aria-label="Close" />
+            <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
+            <div className="w-3 h-3 rounded-full bg-[#28CA42]" />
+          </div>
+          <span className="flex-1 text-center text-[0.65rem] tracking-[0.08em] text-[#898929] font-['DM_Mono',monospace]">
+            hire-brian — offer letter generator
+          </span>
+        </div>
+ 
+        {/* Scrollable body */}
+        <div className="overflow-y-auto flex-1 p-5 sm:p-6">
+ 
+          {/* ── FORM STEP ── */}
+          {(step === "form" || (step === "sending" && letter === "")) && (
+            <>
+              <p className="text-[#5a5a52] text-xs mb-5 leading-relaxed">
+                Fill in the details below. brian-ai will draft a formal offer letter and
+                send it to Brian's email awaiting his review.
+              </p>
+ 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className={labelCls}>Company Name *</label>
+                  <input className={inputCls} placeholder="Acme Corp" value={fields.company} onChange={set("company")} />
+                </div>
+                <div>
+                  <label className={labelCls}>Role / Job Title *</label>
+                  <input className={inputCls} placeholder="Senior Data Scientist" value={fields.role} onChange={set("role")} />
+                </div>
+                <div>
+                  <label className={labelCls}>Department</label>
+                  <input className={inputCls} placeholder="Analytics & Risk" value={fields.department} onChange={set("department")} />
+                </div>
+                <div>
+                  <label className={labelCls}>Salary (annual) *</label>
+                  <input className={inputCls} placeholder="KES 2,400,000" value={fields.salary} onChange={set("salary")} />
+                </div>
+                <div>
+                  <label className={labelCls}>Contract Duration *</label>
+                  <input className={inputCls} placeholder="Permanent / 12 months" value={fields.duration} onChange={set("duration")} />
+                </div>
+                <div>
+                  <label className={labelCls}>Start Date</label>
+                  <input className={inputCls} placeholder="1 July 2026" value={fields.startDate} onChange={set("startDate")} />
+                </div>
+                <div>
+                  <label className={labelCls}>Hiring Manager Name</label>
+                  <input className={inputCls} placeholder="Jane Doe" value={fields.managerName} onChange={set("managerName")} />
+                </div>
+                <div>
+                  <label className={labelCls}>Key Benefits</label>
+                  <input className={inputCls} placeholder="Medical, pension, remote…" value={fields.benefits} onChange={set("benefits")} />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className={labelCls}>Your Email (So Brian can reply) *</label>
+                  <input className={inputCls} placeholder="hiring@acmecorp.com" type="email" value={fields.yourEmail} onChange={set("yourEmail")} />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className={labelCls}>Additional Notes</label>
+                  <textarea
+                    className={`${inputCls} resize-none`}
+                    rows={3}
+                    placeholder="Anything else to include in the letter…"
+                    value={fields.notes}
+                    onChange={set("notes")}
+                  />
+                </div>
+              </div>
+ 
+              {errMsg && (
+                <p className="mt-3 text-[#ff6b6b] text-xs font-['DM_Mono',monospace]">{errMsg}</p>
+              )}
+ 
+              <button
+                onClick={handleGenerate}
+                disabled={step === "sending"}
+                className="mt-5 w-full py-2.5 rounded border border-[rgba(200,185,140,0.3)] text-[#c8b98c] text-sm tracking-widest hover:bg-[rgba(200,185,140,0.06)] transition-colors duration-200 disabled:opacity-40 font-['DM_Mono',monospace]"
+              >
+                {step === "sending" ? "generating letter…" : "generate offer letter →"}
+              </button>
+            </>
+          )}
+ 
+          {/* ── PREVIEW STEP ── */}
+          {step === "preview" && (
+            <>
+              <p className="text-[#5a5a52] text-xs mb-3 leading-relaxed">
+                Review and edit the letter below. Hit Send to Brian to
+                dispatch it 
+              </p>
+ 
+              <textarea
+                className={`${inputCls} resize-y leading-relaxed`}
+                rows={14}
+                style={{ maxHeight: "340px" }}
+                value={letter}
+                onChange={(e) => setLetter(e.target.value)}
+              />
+ 
+              {errMsg && (
+                <p className="mt-2 mb-1 text-[#ff6b6b] text-xs font-['DM_Mono',monospace]">{errMsg}</p>
+              )}
+ 
+              <div className="flex gap-3">
+                <button
+                  onClick={() => { setStep("form"); setLetter(""); }}
+                  className="flex-1 py-2.5 rounded border border-[rgba(200,185,140,0.15)] text-[#5a5a52] text-sm hover:text-[#c8b98c] hover:border-[rgba(200,185,140,0.3)] transition-colors duration-200 font-['DM_Mono',monospace]"
+                >
+                  ← edit details
+                </button>
+                <button
+                  onClick={handleSend}
+                  className="flex-1 py-2.5 rounded border border-[rgba(200,185,140,0.4)] text-[#c8b98c] text-sm hover:bg-[rgba(200,185,140,0.08)] transition-colors duration-200 font-['DM_Mono',monospace]"
+                >
+                  send to brian →
+                </button>
+              </div>
+            </>
+          )}
+ 
+          {/* ── SENDING STEP (after preview) ── */}
+          {step === "sending" && letter !== "" && (
+            <div className="flex flex-col items-center justify-center py-12 gap-4">
+              <div className="flex gap-2">
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    className="w-2 h-2 rounded-full bg-[#c8b98c]"
+                    style={{ animation: "dotPulse 1.2s ease-in-out infinite", animationDelay: `${i * 0.2}s` }}
+                  />
+                ))}
+              </div>
+              <p className="text-[#5a5a52] text-xs tracking-widest font-['DM_Mono',monospace]">dispatching offer…</p>
+            </div>
+          )}
+ 
+          {/* ── DONE STEP ── */}
+          {step === "done" && (
+            <div className="flex flex-col items-center justify-center py-10 gap-3 text-center">
+              <div className="text-2xl">✓</div>
+              <p className="text-[#a8e6cf] text-sm font-['DM_Mono',monospace]">Offer dispatched.</p>
+              <p className="text-[#5a5a52] text-xs leading-relaxed max-w-xs">
+                Your offer letter has been sent to Brian's inbox. He'll review it and get back to you
+                via the contact details you provided.
+              </p>
+              <button
+                onClick={onClose}
+                className="mt-4 px-6 py-2 rounded border border-[rgba(200,185,140,0.2)] text-[#c8b98c] text-xs tracking-widest hover:bg-[rgba(200,185,140,0.06)] transition-colors font-['DM_Mono',monospace]"
+              >
+                close
+              </button>
+            </div>
+          )}
+ 
+        </div>
+      </div>
+    </div>
+  );
+}
 
 
-// Stream text character by character
+// Stream text character by character-Terminal
 function useTypewriter(text, speed = 18, active = true) {
   const [displayed, setDisplayed] = useState("");
   useEffect(() => {
@@ -115,7 +386,7 @@ export default function Terminal() {
   const [history,    setHistory]    = useState([]);
   const [histIdx,    setHistIdx]    = useState(-1);
   const [sectionVisible, setSectionVisible] = useState(false);
-
+  const[showHireModal, setShowHireModal] = useState(false);
   const outputRef  = useRef(null);
   const inputRef   = useRef(null);
   const sectionRef = useRef(null);
@@ -252,6 +523,20 @@ export default function Terminal() {
         setTimeout(() => setLines([]), 100);
         return;
       }
+    if (response === "__TRIGGER_HIRE_BRIAN__") {
+        setTimeout(() => {
+            setLines((prev) => [
+                ...prev,
+                { id: Date.now(), 
+                  type: "system", 
+                  text: "Opening offer letter form... (Fill in the details to send Brian an offer)",
+                 },
+            ]);
+            setShowHireModal(true);
+        }, 150);
+        return;
+        }
+    
       setTimeout(() => {
         setLines((prev) => [
           ...prev,
@@ -264,6 +549,16 @@ export default function Terminal() {
     // Gemini call to fetch an answer
     await callGroq(raw);
   }, [input, isThinking, callGroq]);
+
+  const handleOfferSent = useCallback((confirmationLine) => {
+    setShowHireModal(false);
+    setLines((prev) => [
+        ...prev,
+        { id: Date.now(), 
+          type: "easter", 
+          text: confirmationLine },
+    ]);
+  }, []);
 
   // Keyboard handling 
   const handleKeyDown = (e) => {
@@ -311,6 +606,13 @@ export default function Terminal() {
         .term-output::-webkit-scrollbar-thumb { background: rgba(200,185,140,0.2); border-radius: 2px; }
         .term-output::-webkit-scrollbar-thumb:hover { background: rgba(200,185,140,0.4); }
       `}</style>
+
+      {showHireModal && (
+        <HireModal
+           onClose={() => setShowHireModal(false)}
+           onSent={handleOfferSent}
+           />
+      )}
 
       {/* The terminal section */}
       <section

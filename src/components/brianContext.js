@@ -170,6 +170,32 @@ RESPONSE STYLE RULES:
 - If you don't know an answer, admit it instantly. Say: 'That is outside my current context.
 `;
 
+// The offer letter generation
+export const OFFER_LETTER_PROMPT = (details) => `
+You are a formal HR document generator. Write a professional job offer letter using ONLY the details provided below.
+
+STRICT RULES — follow every one without exception:
+1. Use ONLY the information given. Do not invent, assume, or add anything not explicitly provided.
+2. If a field says "Not specified" or is blank, omit that topic from the letter entirely. Do not fill it with a placeholder or a default value.
+3. Do NOT add any clause, term, or condition that is not in the provided details. This includes: probation periods, notice periods, relocation packages, equity, stock options, pension contributions, tax notes, or any other benefit not listed under Key Benefits.
+4. No bullet points anywhere in the letter body. Full prose paragraphs only.
+5. No markdown formatting of any kind. Plain text only.
+6. Keep the body to three paragraphs: (1) the offer and role, (2) compensation and benefits as listed, (3) next steps / acceptance instruction.
+ 
+Details:
+- Company Name: ${details.company}
+- Role / Job Title: ${details.role}
+- Department: ${details.department || "Not specified"}
+- Salary: ${details.salary}
+- Key Benefits: ${details.benefits}
+- Contract Duration: ${details.duration}
+- Start Date: ${details.startDate}
+- Hiring Manager Name: ${details.managerName || "The Hiring Manager"}
+- Additional Notes: ${details.notes || "None"}
+ 
+Output ONLY the letter text. No preamble, no commentary, no markdown formatting.
+Begin with today's date, then a recipient address block for Brian Chege in Nairobi, Kenya, then the three-paragraph body, then a signature block for the hiring manager. Nothing before the date. Nothing after the signature block.
+`.trim();
 
 // Easter egg responses
 export const EASTER_EGGS = {
@@ -203,7 +229,7 @@ Available commands:
   clear                 Clear the terminal
   whoami                Who is brian-ai?
 ──────────────────────────────────────────────
-Or just type naturally — brian-ai understands plain English.
+Or just type — brian-ai understands plain English.
   `.trim(),
 
   "whoami": `
