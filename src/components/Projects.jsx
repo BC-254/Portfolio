@@ -295,11 +295,10 @@ export default function Projects() {
     > 
         {/* Accent Line and Subtitle */}
         <div className = "flex items-center justify-center gap-3 mb-4 w-full">
-            <div className="h-px w-8 sm:w-12 bg-white/20" />
-            <span className="text-[10px] sm:text-xs tracking-[0.25em] uppercase text-zinc-500">
+            <span className="text-[0.65rem] tracking-[0.22em] text-[#c8b98c] block mb-3 uppercase">
                 Selected Works
             </span>
-            <div className="h-px w-8 sm:w-12 bg-white/20" />
+            
         </div>
            {/* The header */}
         <h2 

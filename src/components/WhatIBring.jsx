@@ -196,7 +196,7 @@ export default function WhatIBring() {
       >
        {/* Section titles and eyebrow text */}
         <div className="text-center mb-16 relative z-10">
-          <span className="text-[0.65rem] tracking-[0.22em] text-white/35 block mb-3 uppercase">MY SKILLSET</span>
+          <span className="text-[0.65rem] tracking-[0.22em] text-[#c8b98c] block mb-3 uppercase">MY SKILLSET</span>
           <h2 className="text-[clamp(2rem,8vw,3.2rem)] font-extrabold leading-[1.1] text-white/90 m-0">What I bring to the table</h2>
         </div>
 

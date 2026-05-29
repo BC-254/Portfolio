@@ -215,7 +215,7 @@ export default function DeepDive() {
         <div className="mb-14 sm:mb-20 flex flex-col items-center text-center mx-auto max-w-2xl"> 
         {/* The Eyebrow */}
           <AnimatedEl delay={100}>
-            <p className="font-['DM_Mono',monospace] text-[0.65rem] tracking-[0.2em] text-[#f2f0eb9a] uppercase mb-4">
+            <p className="text-[0.65rem] tracking-[0.22em] text-[#c8b98c] block mb-3 uppercase">
               Deep dive
             </p>
           </AnimatedEl>

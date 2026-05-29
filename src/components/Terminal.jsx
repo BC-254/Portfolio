@@ -595,7 +595,7 @@ export default function Terminal() {
     ]);
 
     // Easter egg intercept f before going to AI 
-    const easterKey = Object.keys(EASTER_EGGS).find((k) => normalized === k);
+    const easterKey = Object.keys(EASTER_EGGS).find((k) => normalized === k.toLowerCase());
 
     if (easterKey) {
       const response = EASTER_EGGS[easterKey];
@@ -616,15 +616,21 @@ export default function Terminal() {
         }, 150);
         return;
         }
-    
-      setTimeout(() => {
-        setLines((prev) => [
-          ...prev,
-          { id: Date.now(), type: "easter", text: response },
-        ]);
-      }, 150);
+      
+    if (response.startsWith("__GROQ__")) {
+      const prompt = response.slice("__GROQ__".length).trim();
+      await callGroq(prompt);
       return;
-    }
+    }  
+    
+    setTimeout(() => {
+      setLines((prev) => [
+        ...prev,
+        { id: Date.now(), type: "easter", text: response },
+      ]);
+    }, 150);
+    return;
+  }
 
     // If not an easter egg, send to Groq for AI response
     await callGroq(raw);
@@ -701,7 +707,7 @@ export default function Terminal() {
       {/* The terminal section design */}
       <section
         ref={sectionRef}
-        className="relative w-full px-4 sm:px-6 lg:px-8 pt-10 pb-10 sm:py-28 bg-[#0d046d3c] overflow-hidden"
+        className="relative w-full px-4 sm:px-6 lg:px-8 pt-8 pb-10 bg-[#0d046d3c] overflow-hidden"
         aria-label="Interactive portfolio terminal"
       >
         {/* The glow at the sides of the terminal */}
@@ -851,7 +857,7 @@ export default function Terminal() {
               transition: "opacity 1s ease 1s",
             }}
           >
-            {["Hot take 1", "Hot take 2","Hire Brian", "Help"].map((cmd) => (
+            {["Who am I?", "Tech Stack","Hire Brian", "Help"].map((cmd) => (
               <button
                 key={cmd}
                 onClick={() => handleSubmit(cmd)}        
