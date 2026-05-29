@@ -2,37 +2,130 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { BRIAN_CONTEXT, EASTER_EGGS, BOOT_SEQUENCE, OFFER_LETTER_PROMPT} from "./brianContext";
 import emailjs from "@emailjs/browser";
 
+// EmailJS Configuration
 const EMAILJS_SERVICE_ID  = "service_f5naa8d";   
 const EMAILJS_TEMPLATE_ID = "template_2qw3hzt";  
 const EMAILJS_PUBLIC_KEY  = "JczN8ZuvvlJQQrqw9";
 const BRIAN_EMAIL         = "bchege55200@gmail.com";
  
+// The preview step for editing the generated letter
+function PreviewStep({ letter, setLetter, errMsg, handleSend, onBack }) {
+  const [editing, setEditing] = useState(false);
+  // Input styling for the textarea and the preview box
+  const inputCls =
+    "w-full border border-[rgba(56,189,248,0.2)] rounded px-3 py-2 " +
+    "text-white text-sm focus:outline-none focus:border-[rgba(56,189,248,0.6)] transition-colors duration-200";
+  return (
+    <>
+      {/* The top instruction text */}
+      <p className="text-[#eeeeea] text-xs mb-3 leading-relaxed">
+        {editing
+          ? "Edit the letter below, then send when ready."
+          : "Review the generated letter. Edit or send it to Brian."}
+      </p>
+
+      {editing ? (
+        <textarea
+          autoFocus
+          className={`${inputCls} resize-y leading-relaxed`}
+          rows={14}
+          style={{ maxHeight: "340px" }}
+          value={letter}
+          onChange={(e) => setLetter(e.target.value)}
+        />
+      ) : (
+        <div
+          className="w-full border border-[rgba(56,189,248,0.2)] rounded px-3 py-2 text-[#d4cfc4] text-sm leading-relaxed whitespace-pre-wrap overflow-y-auto"
+          style={{ maxHeight: "340px", minHeight: "160px" }}
+        >
+          {letter}
+        </div>
+      )}
+      {/* Incase of an error message */}
+      {errMsg && (
+        <p className="mt-2 mb-1 text-[#ff6b6b] text-xs font-['DM_Mono',monospace]">{errMsg}</p>
+      )}
+      
+      {/* The action buttons */}
+      <div className="flex gap-3 mt-4">
+        {/* When not editing */}
+        {!editing ? (
+          <>
+            <button
+              onClick={onBack}
+              className="px-4 py-2.5 rounded border border-[rgba(56,189,248,0.25)] text-[#7dcfed] text-sm hover:bg-[rgba(56,189,248,0.05)] transition-colors duration-200 font-['DM_Mono',monospace]"
+            >
+              Back to form
+            </button>
+            <button
+              onClick={() => setEditing(true)}
+              className="flex-1 py-2.5 rounded border border-[rgba(56,189,248,0.25)] text-[#7dcfed] text-sm hover:bg-[rgba(56,189,248,0.05)] transition-colors duration-200 font-['DM_Mono',monospace]"
+            >
+              Edit letter
+            </button>
+            <button
+              onClick={handleSend}
+              className="flex-1 py-2.5 rounded border border-[rgba(56,189,248,0.25)] text-[#7dcfed] text-sm hover:bg-[rgba(56,189,248,0.05)] transition-colors duration-200 font-['DM_Mono',monospace]"
+            >
+              Send to Brian
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => setEditing(false)}
+              className="flex-1 py-2.5 rounded border border-[rgba(56,189,248,0.25)] text-[#7dcfed] text-sm hover:bg-[rgba(56,189,248,0.05)] transition-colors duration-200 font-['DM_Mono',monospace]"
+            >
+              Back to preview
+            </button>
+            <button
+              onClick={handleSend}
+              className="flex-1 py-2.5 rounded border border-[rgba(56,189,248,0.25)] text-[#7dcfed] text-sm hover:bg-[rgba(56,189,248,0.05)] transition-colors duration-200 font-['DM_Mono',monospace]"
+            >
+              Send to Brian
+            </button>
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+//The terminal modal for hiring me
 function HireModal({ onClose, onSent }) {
-  const [step, setStep]       = useState("form");   // "form" | "preview" | "sending" | "done" | "error"
+  const [step, setStep]       = useState("form");   //Monitoring each step from form filling, preview.. e,t,c
   const [fields, setFields]   = useState({
     company: "", role: "", department: "", salary: "",
     benefits: "", duration: "", startDate: "", managerName: "", 
     yourEmail: "",notes: "",
   });
-  
+  //Storing the generated letter and any error messages
   const [letter, setLetter]   = useState("");
   const [errMsg, setErrMsg]   = useState("");
- 
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  // Helper to update form fields
   const set = (k) => (e) => setFields((p) => ({ ...p, [k]: e.target.value }));
  
   // Generating offer letter with Groq
   const handleGenerate = useCallback(async () => {
-    if (!fields.company || !fields.role || !fields.salary || !fields.duration || !fields.yourEmail) {
+    if (!fields.company || !fields.role || !fields.salary || !fields.duration || !fields.yourEmail) { // Required fields validation
       setErrMsg("Company, Role, Salary, Duration and Your Email are required.");
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.yourEmail)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.yourEmail)) {  //Checking if valid email with @ and domain
       setErrMsg("Please enter a valid email address.");
       return;
     }
+    // Clear previous errors and start generation if all validations pass
     setErrMsg("");
-    setStep("generating"); // reuse "sending" label for "generating"
- 
+    setStep("generating");
+    
+    // Making the API call to Groq to generate the letter
     try {
       const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
@@ -43,18 +136,19 @@ function HireModal({ onClose, onSent }) {
         body: JSON.stringify({
           model: "llama-3.1-8b-instant",
           max_tokens: 900,
-          temperature: 0.4,
+          temperature: 0.4, // Ensuring a more formal and consistent output
           messages: [{ role: "user", content: OFFER_LETTER_PROMPT(fields) }],
         }),
       });
- 
+      // Extracting the generated letter from Groq response
       const data = await response.json();
-      if (!response.ok) throw new Error(data?.error?.message || "Groq error");
- 
+      if (!response.ok) throw new Error(data?.error?.message || "Groq error"); // Handling API errors
+      //Optional chaining  to access the generated letter content
       const text = data?.choices?.[0]?.message?.content || "";
-      setLetter(text.trim());
-      setStep("preview");
-    } catch (err) {
+      setLetter(text.trim()); // Removing extra whitespace at the beginning or the end
+      setStep("preview"); // Move to preview so user can review the letter before sending
+    // Catching any errors during the generation process and showing an error message
+    } catch (err) { 
       setErrMsg(`Letter generation failed: ${err.message}`);
       setStep("form");
     }
@@ -78,88 +172,96 @@ function HireModal({ onClose, onSent }) {
       );
       setStep("done");
       // Notify Terminal so it can print the confirmation line
-      onSent(`offer_letter.txt → ${BRIAN_EMAIL}  ✓  awaiting Brian's review`);
+      onSent(`Your offer letter has been sent successfully. He will review it and get back to you at ${fields.yourEmail}.`);
+    // Incase the email fails to send, catch the error and show the message
     } catch (err) {
       setErrMsg(`Email failed: ${err.message}`);
-      setStep("preview");
+      setStep("preview"); // Returns the user to the preview step to retry sending
     }
   }, [fields, letter, onSent]);
  
-  // Shared input style — matches terminal's dark palette
+  // The  offer letter generator input fields design
   const inputCls =
-    "w-full bg-[#0d0d0b] border border-[rgba(200,185,140,0.18)] rounded px-3 py-2 " +
-    "text-white text-sm placeholder-[#3a3a34] focus:outline-none " +
-    "focus:border-[rgba(200,185,140,0.5)] transition-colors duration-200 font-['DM_Mono',monospace]";
+    "w-full border border-[rgba(56,189,248,0.2)] rounded px-3 py-2 " +
+    "text-white text-sm focus:outline-none " +
+    "focus:border-[rgba(56,189,248,0.6)] transition-colors duration-200";
  
-  const labelCls = "block text-[0.6rem] tracking-[0.15em] text-[#c8b98c] uppercase mb-1";
+  const labelCls = "block text-[0.6rem] tracking-[0.15em] text-white uppercase mb-1";
  
   return (
-    // Backdrop
+    // Blur overlay background when modal is open
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(0,0,0,0.82)", backdropFilter: "blur(6px)" }}
+      style={{ background: "rgba(2,6,23,0.85)", backdropFilter: "blur(6px)" }}
+      // Allow clicking outside the modal to close it
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      {/* Modal window — styled to match the terminal aesthetic */}
+      {/* The modal-box window Design */}
       <div
         className="relative w-full max-w-lg max-h-[90vh] flex flex-col rounded-xl overflow-hidden"
         style={{
           background: "#0d0d0b",
-          border: "1px solid rgba(200,185,140,0.18)",
-          boxShadow: "0 0 60px rgba(200,185,140,0.06)",
+          border: "2px solid rgba(173,216,230,0.6)",
+          boxShadow: "0 0 60px rgba(56,189,248,0.1)", //background glow
         }}
       >
-        {/* Title bar — mirrors Terminal's title bar */}
-        <div className="flex items-center gap-3 px-4 py-3 bg-[#161614] border-b border-[rgba(200,185,140,0.12)] shrink-0">
-          <div className="flex gap-1.5">
-            <button onClick={onClose} className="w-3 h-3 rounded-full bg-[#FF5F57] hover:opacity-80 transition-opacity" aria-label="Close" />
-            <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
-            <div className="w-3 h-3 rounded-full bg-[#28CA42]" />
+        {/* The modal-box Title bar */}
+        <div className="relative flex items-center px-4 py-3 bg-[#161614] border-b border-[rgba(173,216,230,0.4)] shrink-0">
+          <div className="flex gap-1.5 z-10">
+            {/* Close button in the red dot */}
+            <button onClick={onClose} className="w-4 h-3 rounded-full bg-[#FF5F57] hover:opacity-80 transition-opacity flex items-center justify-center" 
+            aria-label="Close"
+            >
+              <span className="text-[#4d0000] text-[15px] font-bold leading-none">x</span>
+            </button>
+            {/* The yellow and green dots*/}
+            <div className="w-4 h-3 rounded-full bg-[#FFBD2E]" />
+            <div className="w-4 h-3 rounded-full bg-[#28CA42]" />
           </div>
-          <span className="flex-1 text-center text-[0.65rem] tracking-[0.08em] text-[#898929] font-['DM_Mono',monospace]">
-            hire-brian — offer letter generator
+          {/* The modal title bar */}
+          <span className="absolute left-1/2 -translate-x-1/2 w-full text-center text-[0.7rem] font-bold tracking-[0.08em] text-[rgba(255,215,0,1.0)] pointer-events-none">
+            Offer Letter Generator
           </span>
         </div>
  
-        {/* Scrollable body */}
-        <div className="overflow-y-auto flex-1 p-5 sm:p-6">
+        {/* The modal body section */}
+        <div className="overflow-y-auto flex-1 p-5 sm:p-6"> {/* Vertical scroll if content exceeds max height */}
  
-          {/* ── FORM STEP ── */}
+          {/* Form Filling Step */}
           {(step === "form" || (step === "sending" && letter === "")) && (
             <>
-              <p className="text-[#5a5a52] text-xs mb-5 leading-relaxed">
-                Fill in the details below. brian-ai will draft a formal offer letter and
-                send it to Brian's email awaiting his review.
+              <p className="text-gray-400 text-xs mb-5 leading-relaxed">
+                Fill in the details below. brian-ai will then draft a formal offer letter. Kindly review and edit it before sending it.
               </p>
- 
+              {/* 1 column in mobile, 2 columns in larger screens */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className={labelCls}>Company Name *</label>
-                  <input className={inputCls} placeholder="Acme Corp" value={fields.company} onChange={set("company")} />
+                  <input className={inputCls} placeholder="Company/Client Name" value={fields.company} onChange={set("company")} />
                 </div>
                 <div>
                   <label className={labelCls}>Role / Job Title *</label>
-                  <input className={inputCls} placeholder="Senior Data Scientist" value={fields.role} onChange={set("role")} />
+                  <input className={inputCls} placeholder="Enter Role/Position" value={fields.role} onChange={set("role")} />
                 </div>
                 <div>
                   <label className={labelCls}>Department</label>
-                  <input className={inputCls} placeholder="Analytics & Risk" value={fields.department} onChange={set("department")} />
+                  <input className={inputCls} placeholder="Department Name" value={fields.department} onChange={set("department")} />
                 </div>
                 <div>
-                  <label className={labelCls}>Salary (annual) *</label>
-                  <input className={inputCls} placeholder="KES 2,400,000" value={fields.salary} onChange={set("salary")} />
+                  <label className={labelCls}>Salary (monthly) *</label>
+                  <input className={inputCls} placeholder="Amount in KES/USD" value={fields.salary} onChange={set("salary")} />
                 </div>
                 <div>
                   <label className={labelCls}>Contract Duration *</label>
-                  <input className={inputCls} placeholder="Permanent / 12 months" value={fields.duration} onChange={set("duration")} />
+                  <input className={inputCls} placeholder="Permanent/Contract" value={fields.duration} onChange={set("duration")} />
                 </div>
                 <div>
                   <label className={labelCls}>Start Date</label>
-                  <input className={inputCls} placeholder="1 July 2026" value={fields.startDate} onChange={set("startDate")} />
+                  <input className={inputCls} placeholder="Start Date" value={fields.startDate} onChange={set("startDate")} />
                 </div>
                 <div>
                   <label className={labelCls}>Hiring Manager Name</label>
-                  <input className={inputCls} placeholder="Jane Doe" value={fields.managerName} onChange={set("managerName")} />
+                  <input className={inputCls} placeholder="Your name" value={fields.managerName} onChange={set("managerName")} />
                 </div>
                 <div>
                   <label className={labelCls}>Key Benefits</label>
@@ -167,7 +269,7 @@ function HireModal({ onClose, onSent }) {
                 </div>
                 <div className="sm:col-span-2">
                   <label className={labelCls}>Your Email (So Brian can reply) *</label>
-                  <input className={inputCls} placeholder="hiring@acmecorp.com" type="email" value={fields.yourEmail} onChange={set("yourEmail")} />
+                  <input className={inputCls} placeholder="Your email address" type="email" value={fields.yourEmail} onChange={set("yourEmail")} />
                 </div>
                 <div className="sm:col-span-2">
                   <label className={labelCls}>Additional Notes</label>
@@ -180,86 +282,61 @@ function HireModal({ onClose, onSent }) {
                   />
                 </div>
               </div>
- 
+              {/* Required fields error message */}
               {errMsg && (
                 <p className="mt-3 text-[#ff6b6b] text-xs font-['DM_Mono',monospace]">{errMsg}</p>
               )}
- 
+              {/* The Generate Letter button */}
               <button
                 onClick={handleGenerate}
                 disabled={step === "sending"}
-                className="mt-5 w-full py-2.5 rounded border border-[rgba(200,185,140,0.3)] text-[#c8b98c] text-sm tracking-widest hover:bg-[rgba(200,185,140,0.06)] transition-colors duration-200 disabled:opacity-40 font-['DM_Mono',monospace]"
+                className="mt-5 w-full py-2.5 rounded border border-[rgba(173,216,230,1.0)] text-[#f9be0a] text-sm tracking-widest hover:bg-[rgba(200,185,140,0.06)] transition-colors duration-200 disabled:opacity-40 font-['DM_Mono',monospace]"
               >
-                {step === "sending" ? "generating letter…" : "generate offer letter →"}
+                {step === "sending" ? "Generating letter…" : "Generate Offer letter →"}
               </button>
             </>
           )}
  
-          {/* ── PREVIEW STEP ── */}
+          {/* Previewing the generated letter */}
           {step === "preview" && (
-            <>
-              <p className="text-[#5a5a52] text-xs mb-3 leading-relaxed">
-                Review and edit the letter below. Hit Send to Brian to
-                dispatch it 
-              </p>
- 
-              <textarea
-                className={`${inputCls} resize-y leading-relaxed`}
-                rows={14}
-                style={{ maxHeight: "340px" }}
-                value={letter}
-                onChange={(e) => setLetter(e.target.value)}
-              />
- 
-              {errMsg && (
-                <p className="mt-2 mb-1 text-[#ff6b6b] text-xs font-['DM_Mono',monospace]">{errMsg}</p>
-              )}
- 
-              <div className="flex gap-3">
-                <button
-                  onClick={() => { setStep("form"); setLetter(""); }}
-                  className="flex-1 py-2.5 rounded border border-[rgba(200,185,140,0.15)] text-[#5a5a52] text-sm hover:text-[#c8b98c] hover:border-[rgba(200,185,140,0.3)] transition-colors duration-200 font-['DM_Mono',monospace]"
-                >
-                  ← edit details
-                </button>
-                <button
-                  onClick={handleSend}
-                  className="flex-1 py-2.5 rounded border border-[rgba(200,185,140,0.4)] text-[#c8b98c] text-sm hover:bg-[rgba(200,185,140,0.08)] transition-colors duration-200 font-['DM_Mono',monospace]"
-                >
-                  send to brian →
-                </button>
-              </div>
-            </>
+            <PreviewStep
+              letter={letter}
+              setLetter={setLetter}
+              errMsg={errMsg}
+              handleSend={handleSend}
+              onBack={() => { setStep("form"); setLetter(""); }}
+            />
           )}
  
-          {/* ── SENDING STEP (after preview) ── */}
+          {/* The sending step and animation */}
           {step === "sending" && letter !== "" && (
             <div className="flex flex-col items-center justify-center py-12 gap-4">
               <div className="flex gap-2">
+                {/* Animated dots for the loading screen*/}
                 {[0, 1, 2].map((i) => (
                   <span
                     key={i}
-                    className="w-2 h-2 rounded-full bg-[#c8b98c]"
+                    className="w-2 h-2 rounded-full bg-[#38bdf8]"
                     style={{ animation: "dotPulse 1.2s ease-in-out infinite", animationDelay: `${i * 0.2}s` }}
                   />
                 ))}
               </div>
-              <p className="text-[#5a5a52] text-xs tracking-widest font-['DM_Mono',monospace]">dispatching offer…</p>
+              <p className="text-[#5a5a52] text-xs tracking-widest font-['DM_Mono',monospace]">Sending offer letter…</p>
             </div>
           )}
  
-          {/* ── DONE STEP ── */}
+          {/* The done step */}
           {step === "done" && (
             <div className="flex flex-col items-center justify-center py-10 gap-3 text-center">
               <div className="text-2xl">✓</div>
-              <p className="text-[#a8e6cf] text-sm font-['DM_Mono',monospace]">Offer dispatched.</p>
+              <p className="text-[#a8e6cf] text-sm font-['DM_Mono',monospace]">Offer Letter Sent</p>
               <p className="text-[#5a5a52] text-xs leading-relaxed max-w-xs">
                 Your offer letter has been sent to Brian's inbox. He'll review it and get back to you
                 via the contact details you provided.
               </p>
               <button
                 onClick={onClose}
-                className="mt-4 px-6 py-2 rounded border border-[rgba(200,185,140,0.2)] text-[#c8b98c] text-xs tracking-widest hover:bg-[rgba(200,185,140,0.06)] transition-colors font-['DM_Mono',monospace]"
+                className="mt-4 px-6 py-2 rounded border border-[rgba(56,189,248,0.2)] text-[#7dcfed] text-xs tracking-widest hover:bg-[rgba(200,185,140,0.06)] transition-colors font-['DM_Mono',monospace]"
               >
                 close
               </button>
@@ -272,8 +349,8 @@ function HireModal({ onClose, onSent }) {
   );
 }
 
-
-// Stream text character by character-Terminal
+// THE MAIN TERMINAL COMPONENT
+// Stream text character by character
 function useTypewriter(text, speed = 18, active = true) {
   const [displayed, setDisplayed] = useState("");
   useEffect(() => {
@@ -291,13 +368,13 @@ function useTypewriter(text, speed = 18, active = true) {
   return displayed;
 }
 
-// How a single line looks in the terminal
+// User type messages
 function TermLine({ line }) {
   const isUser   = line.type === "user";
   const isEaster = line.type === "easter";
   const isBoot   = line.type === "boot";
   const isSystem = line.type === "system";
-  // Handling the messages
+  // Handling user messages
   if (isUser) {
     return (
       <div className="flex gap-2 mb-1">
@@ -310,7 +387,7 @@ function TermLine({ line }) {
       </div>
     );
   }
-
+  // Handling easter egg responses
   if (isEaster) {
     return (
       <pre className="text-[#a8e6cf] text-xs sm:text-sm whitespace-pre-wrap mb-3 leading-relaxed">
@@ -318,7 +395,7 @@ function TermLine({ line }) {
       </pre>
     );
   }
-
+  // Boot and system messages
   if (isBoot || isSystem) {
     return (
       <div className="text-[#5a5a52] text-xs sm:text-sm mb-0.5 leading-relaxed">
@@ -377,7 +454,8 @@ function Thinking() {
   );
 }
 
-// The Main Terminal 
+// The Terminal window
+// Memory states
 export default function Terminal() {
   const [lines,      setLines]      = useState([]);
   const [input,      setInput]      = useState("");
@@ -417,7 +495,7 @@ export default function Terminal() {
     return () => obs.disconnect();
   }, []);
 
-  // The Boot sequence of the lines
+  // The Boot animation of the lines
   const runBootSequence = useCallback(() => {
     BOOT_SEQUENCE.forEach(({ text, delay }) => {
       setTimeout(() => {
@@ -455,13 +533,12 @@ export default function Terminal() {
                   content: userInput
                 }
             ],
-            temperature:0.7,
+            temperature:0.4,
             max_tokens: 400,
         }),
     }
 );
-            
-           
+      // Handling the AI reply to JSON file 
       const data = await response.json();
 
       if (!response.ok) {
@@ -471,14 +548,14 @@ export default function Terminal() {
       const text =
         data?.choices?.[0]?.message?.content ||
         "I didn't catch that. Try rephrasing?";
-
+      // Updating the state with the new AI response line and removing the thinking animation
       setIsThinking(false);
       setLines((prev) => [
         ...prev,
         { id: aiId, type: "ai", text: text.trim(), done: false },
       ]);
      
-      // Waiting time based on text length
+      // Waiting time to stop blinking cursor and show the full text
       const duration = Math.min(text.length * 12 + 200, 6000);
       setTimeout(() => {
         setLines((prev) =>
@@ -498,14 +575,17 @@ export default function Terminal() {
     }
   }, []);
 
-  // Handle submit 
-  const handleSubmit = useCallback(async () => {
-    const raw = input.trim();
+  // Sending the user input
+  const handleSubmit = useCallback(async (directCommand) => {
+    // The buttons to send directly instead of pressing enter again
+    const textToProcess = typeof directCommand === "string" ? directCommand : input;
+    const raw = textToProcess.trim();
     if (!raw || isThinking) return;
-
+    // Normalizing text to lowercase
     const normalized = raw.toLowerCase().trim();
     setInput("");
     setHistIdx(-1);
+    // Saving history to allow use of up and down arrow keys like a terminal
     setHistory((prev) => [raw, ...prev.slice(0, 49)]);
 
     // Always show user line
@@ -514,7 +594,7 @@ export default function Terminal() {
       { id: Date.now(), type: "user", text: raw },
     ]);
 
-    // Easter egg intercept 
+    // Easter egg intercept f before going to AI 
     const easterKey = Object.keys(EASTER_EGGS).find((k) => normalized === k);
 
     if (easterKey) {
@@ -546,10 +626,11 @@ export default function Terminal() {
       return;
     }
 
-    // Gemini call to fetch an answer
+    // If not an easter egg, send to Groq for AI response
     await callGroq(raw);
   }, [input, isThinking, callGroq]);
 
+  // When offer letter is sent, close the modal and print the confirmation line in the terminal
   const handleOfferSent = useCallback((confirmationLine) => {
     setShowHireModal(false);
     setLines((prev) => [
@@ -560,7 +641,7 @@ export default function Terminal() {
     ]);
   }, []);
 
-  // Keyboard handling 
+  // Keyboard controls
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -588,11 +669,13 @@ export default function Terminal() {
   return (
     <>
       <style>{`
+        /* Bouncing dots animation */
         @keyframes dotPulse {  
           0%, 100% { opacity: 0.2; transform: translateY(0); }
           50%       { opacity: 1;   transform: translateY(-2px); }
         }
-          
+         
+        /* Terminal reveal animation */
         @keyframes termReveal {  
           from { opacity: 0; transform: translateY(28px); }
           to   { opacity: 1; transform: translateY(0); }
@@ -600,11 +683,12 @@ export default function Terminal() {
         .term-revealed {
           animation: termReveal 0.8s cubic-bezier(0.16,1,0.3,1) both;
         }
+        
         /* Custom scrollbar for terminal output */
         .term-output::-webkit-scrollbar       { width: 4px; }
         .term-output::-webkit-scrollbar-track { background: transparent; }
-        .term-output::-webkit-scrollbar-thumb { background: rgba(200,185,140,0.2); border-radius: 2px; }
-        .term-output::-webkit-scrollbar-thumb:hover { background: rgba(200,185,140,0.4); }
+        .term-output::-webkit-scrollbar-thumb { background: rgba(200,185,140,0.5); border-radius: 2px; }
+        .term-output::-webkit-scrollbar-thumb:hover { background: rgba(200,185,140,0.8); }
       `}</style>
 
       {showHireModal && (
@@ -614,17 +698,18 @@ export default function Terminal() {
            />
       )}
 
-      {/* The terminal section */}
+      {/* The terminal section design */}
       <section
         ref={sectionRef}
-        className="relative w-full px-4 sm:px-6 lg:px-8 py-20 sm:py-28 bg-[#0d046d51] overflow-hidden"
+        className="relative w-full px-4 sm:px-6 lg:px-8 pt-10 pb-10 sm:py-28 bg-[#0d046d3c] overflow-hidden"
         aria-label="Interactive portfolio terminal"
       >
-        {/* Ambient glow */}
+        {/* The glow at the sides of the terminal */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 rounded-full pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-4xl h-[60vh] sm:h-125 pointer-events-none"
           style={{
-            background: "radial-gradient(circle, rgba(200,185,140,0.04) 0%, transparent 70%)",
+            background: "rgba(56,189,248,0.30)",
+            filter: "blur(100px)"
           }}
           aria-hidden="true"
         />
@@ -647,7 +732,7 @@ export default function Terminal() {
               Talk to: brian-ai
             </h2>
             <p className="mt-4 text-sm sm:text-base text-zinc-400 max-w-lg leading-relaxed mx-auto">
-              An AI trained on Brian's skills, projects and actuarial/data science knowledge. Type your questions or use sample commands given below.
+              An AI trained on Brian's skills, projects plus his actuarial and data science knowledge. Type your questions or use sample commands given below.
             </p>
           </div>
 
@@ -657,7 +742,7 @@ export default function Terminal() {
             style={{ animationDelay: "200ms" }}
           >
             {/* Title bar */}
-            <div className="flex items-center gap-3 px-4 py-3 bg-[#161614] border border-[rgba(200,185,140,0.12)] rounded-t-xl">
+            <div className="flex items-center gap-3 px-4 py-3 bg-[#161614] border border-[rgba(173,216,230,0.4)] rounded-t-xl">
               {/* Traffic lights */}
               <div className="flex gap-1.5" aria-hidden="true">
                 <div className="w-3 h-3 rounded-full bg-[#FF5F57]" />
@@ -666,12 +751,12 @@ export default function Terminal() {
               </div>
               {/* Title */}
               <span className="flex-1 text-center font-['DM_Mono',monospace] text-[0.65rem] text-[#898929] tracking-[0.08em]">
-                brian-ai: portfolio terminal
+                brian-ai: portfolio assistant
               </span>
               {/* Clear button */}
               <button
                 onClick={() => setLines([])}
-                className="text-[0.6rem] text-[#5a5a52] hover:text-[#c8b98c] transition-colors duration-200 tracking-wider"
+                className="text-[0.6rem] text-[#c8b98c] tracking-wider"
                 aria-label="Clear terminal"
               >
                 clear
@@ -681,12 +766,13 @@ export default function Terminal() {
             {/* Output area */}
             <div
               ref={outputRef}
-              className="term-output h-80 sm:h-96 overflow-y-auto bg-[#0d0d0b] border-x border-[rgba(200,185,140,0.12)] p-4 sm:p-5 cursor-text"
+              className="term-output h-80 sm:h-96 overflow-y-auto bg-[#0d0d0b] border border-[rgba(173,216,230,0.4)] p-4 sm:p-5 cursor-text"
               onClick={focusInput}
               role="log"
               aria-live="polite"
               aria-label="Terminal output"
             >
+              {/* Determining the type of user message*/}
               {lines.map((line) => (
                 <TermLine key={line.id} line={line} />
               ))}
@@ -703,7 +789,7 @@ export default function Terminal() {
             </div>
 
             {/* Input row */}
-            <div className="flex items-center gap-2 px-4 sm:px-5 py-3.5 bg-[#0d0d0b] border border-[rgba(200,185,140,0.12)] rounded-b-xl border-t-[rgba(200,185,140,0.06)]">
+            <div className="flex items-center gap-2 px-4 sm:px-5 py-3.5 bg-[#0d0d0b] border border-[rgba(173,216,230,0.4)] rounded-b-xl border-t-[rgba(173,216,230,0.4)]">
               {/* Prompt prefix */}
               <span
                 className="text-[#c8b98c] text-sm shrink-0 select-none"
@@ -719,7 +805,7 @@ export default function Terminal() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder={booted ? "Ask me anything..." : "Initialising..."}
+                placeholder={booted ? "Type here..." : "Initialising..."}
                 disabled={!booted || isThinking}
                 className="flex-1 bg-transparent font-['DM_Mono',monospace] text-white text-sm outline-none placeholder-[#3a3a34] disabled:opacity-40 caret-[#c8b98c] min-w-0"
                 aria-label="Terminal input"
@@ -729,21 +815,35 @@ export default function Terminal() {
                 spellCheck="false"
               />
 
-              {/* Submit button only visible on mobile */}
-              <button
-                onClick={handleSubmit}
-                disabled={!booted || isThinking || !input.trim()}
-                className="sm:hidden shrink-0 w-8 h-8 rounded border border-[rgba(200,185,140,0.2)] bg-[rgba(200,185,140,0.06)] text-[#c8b98c] flex items-center justify-center disabled:opacity-30 transition-opacity"
-                aria-label="Send"
+            {/* The Submit button */}
+            <button
+              onClick={handleSubmit}
+              disabled={!booted || isThinking || !input.trim()}
+              className="shrink-0 w-8 h-8 rounded border border-[#b29a14d7] bg-[rgba(56,189,248,0.2)] flex items-center justify-center disabled:opacity-30 transition-all duration-200 active:scale-45"
+              aria-label="Send"
+            >
+              <svg
+                className="rotate-45"
+                width="15" height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
+                <path
+                d="M22 2L11 13"
+                stroke="#ffda6b" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+              />
+                <path
+                  d="M22 2L15 22L11 13L2 9L22 2Z"
+                  stroke="#ffff00" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+                />
+              </svg>
+            </button>
             </div>
           </div>
+          
 
-          {/* Hint row */}
+          {/* Sample commands */}
           <div
             className="mt-4 flex flex-wrap justify-center gap-2"
             style={{
@@ -751,17 +851,11 @@ export default function Terminal() {
               transition: "opacity 1s ease 1s",
             }}
           >
-            {["hire brian", "Hot take 1", "Hot take 2", "help"].map((cmd) => (
+            {["Hot take 1", "Hot take 2","Hire Brian", "Help"].map((cmd) => (
               <button
                 key={cmd}
-                onClick={() => {
-                  setInput(cmd);
-                  setTimeout(() => {
-                    setInput(cmd);
-                    inputRef.current?.focus();
-                  }, 50);
-                }}
-                className="text-[0.6rem] tracking-widest px-3 py-1.5 border border-[rgba(200,185,140,0.15)] rounded-sm text-[#6b6860] hover:text-[#c8b98c] hover:border-[rgba(200,185,140,0.35)] transition-all duration-200 bg-transparent"
+                onClick={() => handleSubmit(cmd)}        
+                className="text-[0.6rem] tracking-widest px-3 py-1.5 border border-[rgba(140,200,140,0.15)] rounded-sm text-[#c8b98c]  hover:border-[rgba(200,185,140,0.35)] transition-all duration-200 bg-transparent"
               >
                 {cmd}
               </button>
