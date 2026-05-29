@@ -17,7 +17,7 @@ export default function NavBar() {
     { name: 'About', path: '/about' },
     { name: 'Skills', path: '/#Skills', isAnchor: true },
     { name: 'Work', path: '/#Work', isAnchor: true },
-    { name: 'Contact', path: '/#contact', isAnchor: true },
+    { name: 'Contact', path: '/#Contact', isAnchor: true },
   ];
   
   // Single handler for all anchor links from any page

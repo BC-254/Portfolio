@@ -10,8 +10,7 @@ import WhatIBring from './components/WhatIBring';
 import Projects from './components/Projects';
 import DeepDive from './components/deepDive';
 import Terminal from './components/Terminal';
-// import Contact from './components/Contact';
-// import Terminal from './components/Terminal';
+import Contact from './components/Contact';
 // import Footer from './components/Footer';
 // import About from './components/About';
 
@@ -83,12 +82,10 @@ export default function App() {
                     <Terminal />
                   </section>
 
-                  {/* <section id="Contact" className="py-24">
+                  <section id="Contact">
                     <Contact />
-                    <Terminal />
                   </section>
-
-                  <Footer /> */}
+                  
                 </main>
               } /> 
 
