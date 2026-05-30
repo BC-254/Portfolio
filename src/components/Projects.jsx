@@ -234,10 +234,16 @@ function ProjectCard({ project, index }) {
               <span>View Code</span>
             </a>
             <span className="w-px h-4 bg-white/15" />
-            <a href={project.live} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs sm:text-sm transition-colors duration-200 font-mono" style={{ color: `rgb(${project.glow})` }}>
-              <ExternalIcon />
-              <span>Live Preview</span>
-            </a>
+            {project.live ? (
+              <a href={project.live} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs sm:text-sm transition-colors duration-200 font-mono" style={{ color: `rgb(${project.glow})` }}>
+                <ExternalIcon />
+                <span>Live Preview</span>
+              </a>
+            ) : (
+              <span className="flex items-center gap-2 text-xs sm:text-sm font-mono text-zinc-500 italic">
+                Live link coming soon
+              </span>
+            )}
           </div>
         </div>
       </div>

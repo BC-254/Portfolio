@@ -756,7 +756,7 @@ export default function Terminal() {
                 <div className="w-3 h-3 rounded-full bg-[#28CA42]" />
               </div>
               {/* Title */}
-              <span className="flex-1 text-center -['DM_Monofont',monospace] text-[0.65rem] text-[#898929] tracking-[0.08em]">
+              <span className="flex-1 text-center font-['DM_Mono',monospace] text-[0.65rem] text-[#898929] tracking-[0.08em]">
                 brian-ai: portfolio assistant
               </span>
               {/* Clear button */}

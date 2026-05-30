@@ -53,6 +53,8 @@ export default function WhatIBring() {
   const currentFace = useMemo(() => getFaceIndex(rotation), [rotation]);
 
   const rafRef      = useRef(null);
+  const rotationRef = useRef(0);
+  rotationRef.current = rotation; // always reflect latest value for event handlers
   const dragState   = useRef({ active: false, lastX: 0, prevX: 0, lastT: 0, prevT: 0, velocity: 0 });
 
   const cancelRAF = () => { 
@@ -149,7 +151,7 @@ export default function WhatIBring() {
     if (!dragState.current.active) return;
     e.target.releasePointerCapture(e.pointerId);
     dragState.current.active = false;
-    startInertia(rotation);
+    startInertia(rotationRef.current);
   };
 
   // Keyboard Navigation using Enter or Space buttons for accessibility
@@ -301,7 +303,7 @@ export default function WhatIBring() {
               </div>
               <p className="font-['DM_Mono',monospace] text-[0.88rem] leading-[1.8] text-white/60 m-0 mb-8 font-light">{skill.description}</p>
               <div className="border-t border-white/5 pt-5">
-                <p className="font-['DM_Mono',monospace] text-[0.58rem] tracking-[0.2em] text-white/25 m-0 mb-3">TOOLS &amp; METHODS</p>
+                <p className="font-['DM_Mono',monospace] text-[0.58rem] tracking-[0.2em] text-white/25 m-0 mb-3">TOOLS & METHODS</p>
                 <div className="flex flex-wrap gap-2">
                   {skill.tools.map(tool => (
                     <span key={tool} className="font-['DM_Mono',monospace] text-[0.7rem] py-[0.3rem] px-3 rounded-xs border border-[rgba(var(--skill-rgb),0.25)] text-(--skill-c) bg-[rgba(var(--skill-rgb),0.06)] tracking-[0.04em] transition-all duration-200 ease-out hover:bg-[rgba(var(--skill-rgb),0.14)] hover:border-[rgba(var(--skill-rgb),0.5)]">{tool}</span>

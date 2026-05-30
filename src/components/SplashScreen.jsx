@@ -193,7 +193,7 @@ export default function SplashScreen({ onInitialize }) {
           variants={itemVariants}
           className="text-slate-300 text-lg md:text-xl font-sans font-light leading-relaxed max-w-2xl mx-auto"
         >
-          I don&#39;t just model risk; I engineer comprehensive systems and solutions. <br></br>
+          I don't just model risk; I engineer comprehensive systems and solutions. <br />
           
         </motion.p>
 
