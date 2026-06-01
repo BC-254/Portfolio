@@ -11,24 +11,28 @@ import Projects from './components/Projects';
 import DeepDive from './components/deepDive';
 import Terminal from './components/Terminal';
 import Contact from './components/Contact';
-// import Footer from './components/Footer';
-// import About from './components/About';
+import About from './components/About';
 
-function ScrollToSection() {
+// Dealing with links navigations
+function ScrollHandler() {
   const location = useLocation();
 
   useEffect(() => {
     const { scrollTo } = location.state || {};
-    if (!scrollTo) return;
-
-    //Small delay for home page to finish rendering before scrolling
-    const timer = setTimeout(() => {
-      document.getElementById(scrollTo)?.scrollIntoView({ behavior: 'smooth' });
-      //Wipe the state  so the browser back button doesn't re-trigger the scroll
-      window.history.replaceState({}, '');
-    }, 100);
-
-    return () => clearTimeout(timer);
+    
+    if (scrollTo) {
+      // To a specific section
+      const timer = setTimeout(() => {
+        document.getElementById(scrollTo)?.scrollIntoView({ behavior: 'smooth' });
+        window.history.replaceState({}, '');
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      const timer = setTimeout(() => {
+        window.scrollTo(0,0);
+      }, 10);
+      return () => clearTimeout(timer);
+    }
   }, [location]);
 
   return null;
@@ -42,7 +46,7 @@ export default function App() {
 
   return (
     <Router>
-      <ScrollToSection />
+      <ScrollHandler/>
       <div className="bg-slate-950 text-slate-200 min-h-screen font-sans selection:bg-cyan-500/30 overflow-x-hidden">
         
         {/* 1. The Curtain Reveal */}
@@ -90,6 +94,7 @@ export default function App() {
               } /> 
 
               {/* THE ABOUT PAGE ROUTE */}
+              <Route path="/about" element={<About />} />
             </Routes>
           </motion.div>
         )}

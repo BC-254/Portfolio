@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react'; 
 
-export default function NavBar() {
+export default function NavBar({topOffset=0}) {
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
@@ -25,7 +25,7 @@ export default function NavBar() {
     e.preventDefault();
     closeMenu();
     
-    //Home link scrolls to top, others scroll to their section
+    // Home link scrolls to top, others scroll to their section
     const sectionId = link.path === '/' ? null : link.path.replace('/#', '');
     if (isHomePage){
       if(!sectionId) {
@@ -34,7 +34,7 @@ export default function NavBar() {
         document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      //Navigate to home and pass the target section
+      // Navigate to home and pass the target section
       navigate('/', { state: { scrollTo: sectionId } });
     }
   };
@@ -73,7 +73,7 @@ export default function NavBar() {
   return (
     <>
       {/* DESKTOP & MOBILE TOP BAR*/}
-      <nav className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-cyan-500/20">
+      <nav className={`fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-cyan-500/20`} style={{ top: topOffset ?? 0 }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           
           {/* My Brand Initials */}
