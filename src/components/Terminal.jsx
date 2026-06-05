@@ -569,7 +569,7 @@ export default function Terminal() {
         {
           id: aiId,
           type: "system",
-          text: `Error: ${err.message}. Check your VITE_GROQ_API_KEY`,
+          text: `Error: ${err.message}. I am currently unavailable due to high traffic`,
         },
       ]);
     }

@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import React,{ useState, useEffect, useRef } from "react";
 import {motion} from "framer-motion";
 import NavBar from "./NavBar";
 import profilePic from '../assets/Profile_Photo.png';
+import { Code2, Gamepad2, PenTool, Compass} from "lucide-react";
 
 
 // Scroll-reveal animation
@@ -118,7 +119,7 @@ function ScrollProgress() {
   );
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------
 // THE INTRODUCTION SECTION
 function IntroSection() {
   const typedText = useTyping("Actuarial Analyst & Data Scientist",60,800);
@@ -140,8 +141,6 @@ function IntroSection() {
               alt="Brian Chege Profile Photo"
               className="w-28 h-28 md:w-36 md:h-36 rounded-full border-2 border-cyan-500/30 object-cover"
             />
-            {/* Availability badge*/}
-            <span className="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-emerald-400 border-2 border-[#0f0b1e]" title="Available for work" />
           </div>
         </div>
 
@@ -203,9 +202,10 @@ function IntroSection() {
                 I am a detail-oriented{" "}
                 <span className="text-[#f472b6]">Actuarial Analyst</span> and{" "}
                 <span className="text-[#f472b6]">Certified Data Scientist</span> who bridges
-                the gap between traditional risk assessment and modern predictive analytics.
-                Expert at transforming complex datasets into actionable,
-                data-driven risk management solutions.
+                the gap between traditional risk assessment and advanced artificial intelligence.
+                I specialize in decoding large-scale datasets, architecting predictive models and 
+                translating rigorous statistical analysis into clear, actionable business intelligence. 
+                 
               </span>
             </p>
             <p className="text-[#d4d4d4] flex gap-4">
@@ -231,7 +231,7 @@ function IntroSection() {
   );
 }
 
-
+//---------------------------------------------------------------------------------------------------------------
 //  THE CREDENTIALS AND EDUCATION SECTION
 function CredentialsSection() {
   const [ref, visible] = useReveal(0.1);
@@ -253,6 +253,7 @@ function CredentialsSection() {
       title: "BSc. Actuarial Science",
       org: "Catholic University of Eastern Africa",
       color: "#f472b6",
+     
     },
   ];
 
@@ -260,14 +261,14 @@ function CredentialsSection() {
     <section className="py-14 px-6 relative overflow-hidden" style={{ background: "#0d046d3c" }}>
       <div className="max-w-4xl mx-auto relative z-10">
         
-        {/* Title */}
+        {/* Section Title */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Credentials & Education
+            Educational Background
           </h2>
         </div>
 
-        {/* The Education Container */}
+        {/* The Educations Area */}
         <div ref={ref} className="relative">
           
           {/* The Vertical Line */}
@@ -290,7 +291,7 @@ function CredentialsSection() {
                   className={`relative flex flex-col md:flex-row items-start ${isEven ? "md:flex-row-reverse" : ""} transition-all duration-700`}
                   style={{ 
                     opacity: visible ? 1 : 0, 
-                    transform: visible ? "translateY(0)" : "translateY(30px)",
+                    transform: visible ? "translateY(0)" : "translateY(40px)",
                     transitionDelay: `${i * 200}ms` 
                   }}
                 >
@@ -299,12 +300,12 @@ function CredentialsSection() {
                        style={{ background: item.color}} 
                   />
 
-                  {/* Forcing the card to one side on desktop */}
+                  {/* Placeholder for the desktop content area */}
                   <div className="hidden md:block md:w-1/2" />
 
-                  {/* The Content Card */}
+                  {/* The Content Cards */}
                     <div 
-                      className="group relative p-6 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+                      className="group relative p-6 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2"
                       style={{ 
                         backgroundColor: "#13101e",
                         borderTop: "1px solid rgba(255, 255, 255, 0.8)",
@@ -316,7 +317,7 @@ function CredentialsSection() {
                     >
                       {/* The cards SVG Design*/}
                       <div className="absolute inset-0 opacity-[0.2] pointer-events-none mix-blend-screen">
-                        {/* A custom tech/circuit pattern SVG */}
+                        {/* A woody tech pattern SVG */}
                         <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
                           <path d="M0,20 Q25,30 50,20 T100,20" stroke="white" strokeWidth="0.5" fill="none" />
                           <path d="M0,80 Q25,70 50,80 T100,80" stroke="white" strokeWidth="0.5" fill="none" />
@@ -324,7 +325,7 @@ function CredentialsSection() {
                           <circle cx="25" cy="75" r="1" fill="white" />
                           <circle cx="75" cy="75" r="1.5" fill="white" />
                           <path d="M50,20 L25,75 M50,20 L75,75" stroke="white" strokeWidth="0.2" fill="none" strokeDasharray="2,2" />
-                          {/* Topographic grid overlay */}
+                          {/* Grid overlay */}
                           <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
                             <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.1"/>
                           </pattern>
@@ -332,11 +333,10 @@ function CredentialsSection() {
                         </svg>
                       </div>
 
-                      {/* The "Power LED" Hover Effect */}
+                      {/* The Hover Effect */}
                       <div 
-                        className="absolute -inset-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" 
+                        className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" 
                         style={{ 
-                          // When hovered, the edges light up like a powered-on device
                           background: `linear-gradient(135deg, ${item.color}40 0%, transparent 40%, transparent 60%, ${item.color}20 100%)`,
                           maskImage: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                           WebkitMaskComposite: "xor",
@@ -345,7 +345,7 @@ function CredentialsSection() {
                         }} 
                       />
                       
-                      {/* Your existing content stays exactly the same! */}
+                      {/*  */}
                       <span className="inline-block px-3 py-1 rounded-full text-xs font-mono mb-3 border" style={{ color: item.color, borderColor: `${item.color}40`, background: `${item.color}10` }}>
                         {item.year}
                       </span>
@@ -364,23 +364,95 @@ function CredentialsSection() {
   );
 }
 
-// Section title component 
-function SectionTitle({ title }) {
+//-------------------------------------------------------------------------------------------------------------------------
+// THE TECHNICAL ECOSYSTEM
+      // Cards onMouse 3D tilt on Desktop
+function TiltCard({ children, accent, delay }) {
+  const cardRef = useRef(null);
+  const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg)");
+  // Mouse Hover
+  const handleMouseMove = (e) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    // Determining the mouse co-ordinates
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    // The cards tilt
+    const rotateX = ((y - centerY) / centerY) * -10;
+    const rotateY = ((x - centerX) / centerX) * 30;
+
+    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`);
+  };
+  // Mouse leaves then resets the card
+  const handleMouseLeave = () => {
+    setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg)");
+  };
+
   return (
-    <div className="text-center">
-      <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-3">{title}</h2>
-      <div className="h-1 w-14 rounded-full mx-auto" style={{ background: "linear-gradient(90deg,#7c3aed,#f472b6)" }} />
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="snap-center shrink-0 w-[85vw] md:w-87.5 my-8 rounded-2xl p-7 active:scale-[0.98] cursor-grab active:cursor-grabbing"
+      style={{
+        transform,
+        willChange: "transform",
+        contain:"layout",
+        transition: "transform 0.2s ease-out, scale 0.2s ease-out", 
+        background: "linear-gradient(180deg, #1a162e 0%, #0d0a1a 100%)", 
+        borderTop: `3px solid ${accent}`,
+        borderLeft: `2px solid ${accent}40`, 
+        borderRight: `2px solid ${accent}10`,
+        borderBottom: `2px solid transparent`,
+        boxShadow: "0 20px 40px -10px rgba(0,0,0,0.09)", // Drop shadow to float inside the ditch
+      }}
+    >
+      {children}
     </div>
   );
 }
 
-// TECHNICAL ECOSYSTEM SECTION 
+// THE MAIN TECHNICAL ECOSYSTEM SECTION
 function TechSection() {
   const [ref, visible] = useReveal(0.1);
+  const scrollbarRef = useRef(null);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [showArrows, setShowArrows] = useState(false);
+  
+  // Arrows on devices where content overflows
+  useEffect(() => {
+    const pointerFine = window.matchMedia("(pointer:fine)").matches;
+    if (!pointerFine) return;
+
+    const checkOverflow = () => {
+      const el = scrollbarRef.current;
+      if (!el) return;
+      setShowArrows(el.scrollWidth > el.clientWidth);
+    };
+    checkOverflow();
+    const ro = new ResizeObserver(checkOverflow);
+    if (scrollbarRef.current) ro.observe(scrollbarRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  // Hiding the floating hint
+  const handleScroll = (e) => {
+    if (!hasScrolled && e.target.scrollLeft > 20) setHasScrolled(true);
+  };
+
+  // Scroll-arrows on desktop
+  const slideLeft = () => scrollbarRef.current?.scrollBy({left:-350, behavior:"smooth"});
+  const slideRight = () => scrollbarRef.current?.scrollBy({left:350, behavior:"smooth"});
+  
+  // The categories and skills data
   const categories = [
     {
       label: "Data Science & AI",
-      accent: "#f472b6",
+      accent: "#f472b6", 
       skills: [
         { name: "Python Ecosystem", detail: "Pandas, NumPy, Scikit-learn for advanced data manipulation." },
         { name: "Machine Learning", detail: "Regression, Classification, Clustering and Predictive Modeling." },
@@ -390,7 +462,7 @@ function TechSection() {
     },
     {
       label: "Engineering",
-      accent: "#38bdf8",
+      accent: "#38bdf8", 
       skills: [
         { name: "Kotlin", detail: "Building intelligent, native Android applications." },
         { name: "SQL & Databases", detail: "Complex querying, data warehousing, and ETL processes." },
@@ -400,7 +472,7 @@ function TechSection() {
     },
     {
       label: "Actuarial & Viz",
-      accent: "#4ade80",
+      accent: "#4ade80", 
       skills: [
         { name: "R Language", detail: "Statistical computing and graphical techniques." },
         { name: "Financial Modeling", detail: "Risk analysis, probability theory, and reserving methods." },
@@ -414,286 +486,435 @@ function TechSection() {
   ];
 
   return (
-    <section className="py-20 px-6" style={{ background: "#13102a" }}>
-      <div className="max-w-6xl mx-auto">
-        <SectionTitle title="Technical Ecosystem" />
-        <div
-          ref={ref}
-          className={`grid md:grid-cols-3 gap-7 mt-14 transition-all duration-700 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          {categories.map((cat, ci) => (
-            <div
-              key={cat.label}
-              className="rounded-2xl p-7 border border-white/5 hover:-translate-y-2 transition-transform duration-300"
-              style={{
-                background: "#1a162e",
-                borderTop: `3px solid ${cat.accent}`,
-                transitionDelay: `${ci * 100}ms`,
-              }}
-            >
-              <h3 className="flex items-center gap-3 text-lg font-semibold text-white mb-6">
-                <span className="text-2xl" aria-hidden>{cat.icon}</span>
-                {cat.label}
-              </h3>
-              <ul className="space-y-5">
-                {cat.skills.map((sk) => (
-                  <li key={sk.name}>
-                    <p className="text-sm font-semibold mb-1" style={{ color: cat.accent }}>
-                      {sk.name}
-                    </p>
-                    {sk.detail && (
-                      <p className="text-xs text-slate-500 leading-relaxed">{sk.detail}</p>
-                    )}
-                    {sk.tags && (
-                      <div className="flex flex-wrap gap-2 mt-1">
-                        {sk.tags.map((t) => (
-                          <span
-                            key={t}
-                            className="text-xs px-2.5 py-0.5 rounded-md border border-sky-400/20 text-sky-300"
-                            style={{ background: "rgba(56,189,248,0.08)" }}
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </li>
-                ))}
-              </ul>
+    <section 
+      className="relative py-14 px-4 md:px-8 overflow-hidden" 
+      style={{ background: "radial-gradient(circle at top center)" }}
+    >
+      {/*Top-left and Bottom-right glows*/}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-[#f472b6] opacity-15 blur-[100px] md:blur-[140px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#4ade80] opacity-10 blur-[100px] md:blur-[140px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        
+        {/* Section Title */}
+        <div className="mb-16 text-center">
+           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Technical Ecosystem</h2>
+           <p className="text-slate-400 text-sm md:hidden">Swipe to explore my toolkit</p>
+        </div>
+
+        {/* The ditch wrapper */}
+        <div ref={ref} className="relative rounded-3xl overflow-hidden bg-black/40 border border-white/50 shadow-[inset_0_20px_50px_rgba(0,0,0,0.8)] py-10 px-4 md:px-10">
+          
+          {/* The Swipe Hint in Mobile only */}
+          <div 
+            className={`absolute right-6 top-1/2 -translate-y-1/2 z-20 pointer-events-none md:hidden transition-opacity duration-700 ${
+              hasScrolled ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            <div className="flex items-center gap-2 bg-[#1a162e]/90 backdrop-blur-md px-4 py-2 rounded-full border border-sky-400/30 text-sky-300 text-xs font-semibold shadow-lg animate-pulse">
+              Swipe
+              {/* Arrow SVG */}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
             </div>
-          ))}
+          </div>
+
+          {/* Rendering the arrows when showArrows is true */}
+          {showArrows && (
+            <div className="absolute top-1/2 -translate-y-1/2 left-4 right-4 flex justify-between z-20 pointer-events-none">
+
+              {/* Left Button */}
+              <button 
+                onClick={slideLeft} 
+                className="pointer-events-auto w-10 h-10 rounded-full bg-[#1a162e]/80 backdrop-blur border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:scale-110 transition-all shadow-lg"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+
+              {/* Right Button */}
+              <button 
+                onClick={slideRight} 
+                className="pointer-events-auto w-10 h-10 rounded-full bg-[#1a162e]/80 backdrop-blur border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:scale-110 transition-all shadow-lg"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          )}
+
+          {/* Mobile Scrollbar */}
+          <div
+            ref={scrollbarRef}
+            onScroll={handleScroll}
+            className={`flex overflow-x-auto snap-x snap-mandatory w-full lg:justify-center gap-6 px-4 md:px-0 pb-8 transition-all duration-1000 
+              /* Scrollbar Styling */
+              [&::-webkit-scrollbar]:h-2
+              [&::-webkit-scrollbar-track]:bg-black/30 
+              [&::-webkit-scrollbar-track]:rounded-full 
+              [&::-webkit-scrollbar-track]:mt-6
+              [&::-webkit-scrollbar-track]:border
+              [&::-webkit-scrollbar-track]:border-sky-400/30
+              [&::-webkit-scrollbar-thumb]:bg-blue-500/30 
+              hover:[&::-webkit-scrollbar-thumb]:bg-blue-500/30 
+              [&::-webkit-scrollbar-thumb]:rounded-full
+              ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}
+            `}
+          >
+            {categories.map((cat, ci) => (
+              <TiltCard key={cat.label} accent={cat.accent} delay={`${ci * 100}ms`}>
+                {/* The categories Title */}
+                <h3 className="flex items-center gap-3 text-lg font-semibold text-white mb-6">
+                  {cat.label}
+                </h3>
+                
+                <ul className="space-y-5">
+                  {cat.skills.map((sk) => (
+                    <li key={sk.name}>
+                      <p className="text-sm font-semibold mb-1" style={{ color: cat.accent }}>
+                        {sk.name}
+                      </p>
+                      
+                      {sk.detail && (
+                        <p className="text-xs text-slate-400 leading-relaxed">{sk.detail}</p>
+                      )}
+                      
+                      {sk.tags && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {sk.tags.map((t) => (
+                            <span
+                              key={t}
+                              className="text-xs px-2.5 py-0.5 rounded-md border text-sky-300 backdrop-blur-sm"
+                              style={{ 
+                                  background: "rgba(56,189,248,0.05)",
+                                  borderColor: "rgba(56,189,248,0.15)"
+                              }}
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+
+              </TiltCard>
+            ))}
+            
+            {/* Mobile extra space on the right to allow scroll */}
+            <div className="snap-center shrink-0 w-4 md:hidden" />
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// Flip cards 
+//---------------------------------------------------------------------------------------------------------------------------------------
+// THE HOBBIES SECTION
 function HobbiesSection() {
-  const [ref, visible] = useReveal(0.1);
-  const [flipped, setFlipped] = useState({});
-
-  const toggle = (i) => setFlipped((f) => ({ ...f, [i]: !f[i] }));
+  const [activeCard, setActiveCard] = useState(null);
 
   const cards = [
     {
-      icon: "💻",
-      front: "The Coder",
-      backTitle: "Problem Solver",
-      back: "I don't just write code; I architect solutions. Whether automating a spreadsheet or building a predictive model, I love the thrill of making things work efficiently.",
+      icon: <Code2 strokeWidth={1.5} size={42} className="text-violet-400" />,
+      front: "Coder",
+      backTitle: "Digital Architect",
+      back: "For me, coding is not just about pushing commits and writing scripts. My goal is to always architect seamless, end-to-end digital solutions. I am usually very meticulous about how an application comes together, from the underlying database architecture to the final user interface.",
+      gradient: "linear-gradient(135deg, #6d28d9, #4c1d95)", 
+      glow: "rgba(139, 92, 246, 0.4)",
+      themeText: "text-violet-400",
     },
     {
-      icon: "⚽",
-      front: "The Baller",
-      backTitle: "On & Off Pitch",
-      back: "Avid footballer who loves the physical challenge of a match, equally competitive on the console. Balancing turf with gaming is how I recharge and stay focused.",
+      icon: <Gamepad2 strokeWidth={1.5} size={42} className="text-emerald-400" />,
+      front: "Baller",
+      backTitle: "Pitch & Pixels",
+      back: "All work and no play makes Jack a dull boy. I am an avid footballer who loves the physical challenge and camaraderie of a match. I combine this with an undeniable passion and focus in console gaming hence keeping me recharged and dialed in, in-between my work schedules.",
+      gradient: "linear-gradient(135deg, #059669, #064e3b)", 
+      glow: "rgba(16, 185, 129, 0.4)",
+      themeText: "text-emerald-400",
     },
     {
-      icon: "✍️",
-      front: "The Creator",
-      backTitle: "Creative Soul",
-      back: "Data tells the truth, but stories sell it. Writing allows me to explore the emotional side of the digital revolution and keeps my imagination vivid.",
+      icon: <PenTool strokeWidth={1.5} size={42} className="text-blue-400" />,
+      front: "Script-Writer",
+      backTitle: "Analytical Scribe",
+      back: "Data tells the truth, but it takes a story to actually sell that truth to the world. Even though my profession requires strict logic, writing allows me to keep my imagination vivid and that I never lose sight of the individuals behind the screens.", 
+      gradient: "linear-gradient(135deg, #60a5fa, #2563eb)", 
+      glow: "rgba(96, 165,250, 0.4)",
+      themeText: "text-blue-400",
     },
     {
-      icon: "🔬",
-      front: "The Techie",
-      backTitle: "Obsessed",
-      back: "I live and breathe technology. Whether optimizing code or dissecting AI trends, I view technology as the ultimate creative canvas where logic meets imagination.",
-    },
+      icon: <Compass strokeWidth={1.5} size={42} className="text-[#ea580c]" />,
+      front: "Explorer",
+      backTitle: "Offline Horizons",
+      back: "Honestly, the most profound inspiration rarely comes from sitting behind a monitor. Whenever I am unplugged, my default state is exploring the outdoors. Stepping out of the digital ecosystem is never an escape but a means where my most innovative ideas often come from.",
+      gradient: "linear-gradient(135deg, #ea580c, #9a3412)", 
+      glow: "rgba(245, 158, 11, 0.4)",
+      themeText: "text-[#ea580c]",
+    }    
   ];
 
   return (
-    <section className="py-20 px-6" style={{ background: "#0f0b1e" }}>
-      <div className="max-w-6xl mx-auto">
-        <SectionTitle title="My Core Algorithm" />
-        <p className="text-center text-sm text-slate-500 mt-2 mb-12">
-          Tap a card to flip it
-        </p>
-        <div
-          ref={ref}
-          className={`grid sm:grid-cols-2 lg:grid-cols-4 gap-6 transition-all duration-700 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          {cards.map((card, i) => (
-            <div
-              key={card.front}
-              className="h-72 cursor-pointer"
-              style={{ perspective: "1000px" }}
-              onClick={() => toggle(i)}
-              onKeyDown={(e) => e.key === "Enter" && toggle(i)}
-              tabIndex={0}
-              role="button"
-              aria-label={`Flip card: ${card.front}`}
-              aria-pressed={!!flipped[i]}
-            >
+    <section className="relative py-14 px-6 bg-[#0d046d3c] overflow-hidden">
+      {/* Rain Background */}
+      <style>
+        {`
+          @keyframes rain-fall {
+            0% { background-position: 0px 0px; }
+            100% { background-position: 100px 200px; }
+          }
+        `}
+      </style>
+      
+      {/*Violet drops*/}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-90 mix-blend-screen"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20 l -3 15 M80 50 l -3 15 M140 10 l -3 15 M180 80 l -3 15 M50 120 l -3 15 M110 150 l -3 15 M160 130 l -3 15 M10 180 l -3 15' stroke='%238b5cf6' stroke-width='1.5' stroke-linecap='round' stroke-opacity='0.4'/%3E%3C/svg%3E")`,
+          backgroundSize: "200px 200px",
+          animation: "rain-fall 1.5s linear infinite",
+          willChange: "background-position"
+        }}
+      />
+      
+      {/*Cyan drops*/}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-90 mix-blend-screen"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='150' height='150' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 40 l -4 20 M100 20 l -4 20 M130 90 l -4 20 M60 110 l -4 20' stroke='%2322d3ee' stroke-width='1' stroke-linecap='round' stroke-opacity='0.3'/%3E%3C/svg%3E")`,
+          backgroundSize: "150px 150px",
+          animation: "rain-fall 1s linear infinite",
+          willChange: "background-position"
+        }}
+      />      
+      
+      <div className="max-w-6xl mx-auto relative z-10">
+        
+        {/* The Section header */}
+        <div className="mb-20 flex flex-col items-center text-center gap-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
+            My Core Modules            
+          </h2>
+          <p className="font-mono text-sm text-slate-400 max-w-lg mt-2 leading-relaxed">
+             The facets that make me who I am. 
+          </p>
+        </div>
+
+        {/* THE CARDS */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {cards.map((card, i) => {
+            const isFlipped = activeCard === i;
+
+            return (
               <div
-                className="relative w-full h-full transition-transform duration-700"
-                style={{
-                  transformStyle: "preserve-3d",
-                  transform: flipped[i] ? "rotateY(180deg)" : "rotateY(0deg)",
+                key={card.front}
+                className="group h-90 cursor-pointer"
+                style={{ perspective: "1200px" }}
+                
+                // Mobile Click / Keyboard Toggle
+                onClick={() => setActiveCard(isFlipped ? null : i)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setActiveCard(isFlipped ? null : i);
+                  }
                 }}
+                // Desktop Hover
+                onMouseEnter={() => setActiveCard(i)}
+                onMouseLeave={() => setActiveCard(null)}
+                tabIndex={0}
+                role="button"
+                aria-label={`Flip card: ${card.front}`}
+                aria-expanded={isFlipped}
               >
-                {/* Front */}
+                {/* Flipping Design*/}
                 <div
-                  className="absolute inset-0 rounded-2xl flex flex-col items-center justify-center gap-4 border border-white/5"
-                  style={{ background: "#1a162e", backfaceVisibility: "hidden" }}
-                >
-                  <span className="text-5xl" aria-hidden>{card.icon}</span>
-                  <p className="text-lg font-semibold text-white">{card.front}</p>
-                  <span className="text-xs text-slate-500">tap to flip</span>
-                </div>
-                {/* Back */}
-                <div
-                  className="absolute inset-0 rounded-2xl flex flex-col items-center justify-center gap-3 p-6 text-center border border-white/10"
+                  className="relative w-full h-full transition-all duration-700 ease-out rounded-2xl"
                   style={{
-                    background: "linear-gradient(135deg,#7c3aed,#4c1d95)",
-                    backfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
+                    transformStyle: "preserve-3d",
+                    transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                    boxShadow: isFlipped ? `0 0 30px ${card.glow}` : "none",
                   }}
                 >
-                  <p className="text-lg font-bold text-white border-b border-white/20 pb-2 w-full text-center">
-                    {card.backTitle}
-                  </p>
-                  <p className="text-sm text-violet-100 leading-relaxed">{card.back}</p>
+                  {/* Front of the card */}
+                  <div
+                    className="absolute inset-0 rounded-2xl flex flex-col items-center justify-center p-8 border border-white/70 md:border-white/30 bg-[#111] backdrop-blur-md transition-all duration-300 group-hover:bg-[#1a1a1a] group-hover:border-white/70 group-hover:-translate-y-2 group-hover:shadow-2xl"
+                    style={{ backfaceVisibility: "hidden" }}
+                  >
+                    {/*The icon circle*/}
+                    <div className="mb-6 p-4 rounded-full bg-white/5 border border-white/30 shadow-inner transition-transform duration-300 group-hover:scale-110">
+                      {card.icon}
+                    </div>
+                    <p className="text-2xl font-bold text-white tracking-wide mb-2">
+                      {card.front}
+                    </p>
+                    <p className={`font-mono text-xs tracking-[0.2em] uppercase sm:hidden mt-14 ${card.themeText}`}>
+                      Tap to view
+                    </p>
+                  </div>
+
+                  {/* Back of the cards */}
+                  <div
+                    className="absolute inset-0 rounded-2xl flex flex-col items-center justify-center text-center p-8 border border-white/50 overflow-hidden"
+                    style={{
+                      background: card.gradient,
+                      backfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                    }}
+                  >
+                    <h3 className="text-xl font-bold text-white mb-4 pb-3 border-b border-white/60 w-full">
+                      {card.backTitle}
+                    </h3>
+                    <p className="text-sm text-white/90 leading-relaxed font-light">
+                      {card.back}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+        
       </div>
     </section>
   );
 }
 
-// ── Fun facts ──────────────────────────────────────────────────────────────
-function FactsSection() {
-  const [ref, visible] = useReveal(0.1);
-  const facts = [
-    {
-      icon: "🧹",
-      title: "Certified Clean Freak",
-      desc: "I treat my apartment like my datasets: null values (dust) are not tolerated, outliers (stray socks) are investigated, and everything must be normalized before I can function.",
-    },
-    {
-      icon: "🎵",
-      title: "French Playlist Obsession",
-      desc: "I analyze data in English, but I vibe exclusively to French songs. A deep, unapologetic obsession that powers my late-night coding sessions. C'est la vie.",
-    },
-    {
-      icon: "❤️",
-      title: "The Empathetic Engineer",
-      desc: "I believe the best code doesn't just function — it cares. I build technology that feels less like a machine and more like a supportive partner.",
-    },
-  ];
-
-  return (
-    <section className="py-20 px-6" style={{ background: "#13102a" }}>
-      <div className="max-w-6xl mx-auto">
-        <SectionTitle title='The "Unfiltered" Stats' />
-        <div
-          ref={ref}
-          className={`flex flex-wrap justify-center gap-6 mt-12 transition-all duration-700 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          {facts.map((f, i) => (
-            <div
-              key={f.title}
-              className="flex items-start gap-4 max-w-sm rounded-2xl p-5 border border-white/5 hover:scale-105 hover:border-violet-500/40 transition-all duration-300"
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                transitionDelay: `${i * 100}ms`,
-              }}
-            >
-              <div
-                className="w-12 h-12 rounded-full flex items-center justify-center text-xl flex-shrink-0"
-                style={{
-                  background: "linear-gradient(135deg,#7c3aed,#f472b6)",
-                  boxShadow: "0 0 15px rgba(124,58,237,0.4)",
-                }}
-                aria-hidden
-              >
-                {f.icon}
-              </div>
-              <div>
-                <p className="font-semibold text-white text-sm mb-1">{f.title}</p>
-                <p className="text-xs text-slate-500 leading-relaxed">{f.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ── Socials / Connect ──────────────────────────────────────────────────────
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+// THE CONTACTS SECTION
 function SocialsSection() {
   const [ref, visible] = useReveal(0.1);
   const links = [
-    { href: "https://linkedin.com/in/bchege", label: "LinkedIn", icon: "in", color: "#0077b5" },
-    { href: "https://wa.me/+254790002282", label: "WhatsApp", icon: "💬", color: "#25D366" },
-    { href: "mailto:bchege55200@gmail.com", label: "Email", icon: "✉️", color: "#EA4335" },
-    { href: "https://instagram.com/lu.ch.a_", label: "Instagram", icon: "📸", color: "#E1306C" },
+    {
+      href: "https://linkedin.com/in/bchege",
+      label: "LinkedIn",
+      color: "#0077b5",
+      isCustom: true,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+        </svg>
+      ),      
+    },
+
+    {
+      href: "https://wa.me/+254780940277",
+      label: "WhatsApp",
+      color: "#25D366",
+      slug: "whatsapp",
+    },
+
+    {
+      href: "mailto:bchege55200@gmail.com",
+      label: "Gmail",
+      color: "#EA4335",
+      slug: "gmail",  
+    },
+
+    {
+      href: "https://instagram.com/lu.ch.a_",
+      label: "Instagram",
+      color: "#E1306C",
+      slug: "instagram",
+    },
   ];
 
   return (
-    <section className="py-20 px-6 text-center" style={{ background: "#0f0b1e" }}>
-      <div className="max-w-3xl mx-auto">
-        <SectionTitle title="Let's Connect" />
+    <section className="relative py-14 px-6 text-center overflow-hidden" style={{ background: "#0f0b1e" }}>
+
+      <div className="max-w-3xl mx-auto relative z-10">
+
+        {/* Section Header */}
+        <div className="mb-12 flex flex-col items-center justify-center gap-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
+            Let's Connect
+          </h2>
+        </div>
+
+        {/*The Dock Design*/}
         <div
           ref={ref}
-          className={`inline-flex flex-wrap justify-center gap-4 mt-12 p-5 rounded-2xl border border-white/5 transition-all duration-700 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          className={`inline-flex justify-center items-center gap-2 sm:gap-4 p-2 rounded-4xl border border-[rgba(173,216,230,0.4)] transition-all duration-1000 ease-out shadow-2xl ${
+            visible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-12 scale-95"
           }`}
-          style={{ background: "rgba(255,255,255,0.03)", backdropFilter: "blur(10px)" }}
+          style={{
+            background: "linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)",
+            backdropFilter: "blur(20px)",
+          }}
         >
+          {/* The individual buttons*/}
           {links.map((l) => (
             <a
               key={l.label}
               href={l.href}
               aria-label={l.label}
-              className="relative group w-14 h-14 rounded-xl flex items-center justify-center text-2xl border border-white/10 text-slate-400 transition-all duration-300 hover:-translate-y-2 hover:scale-110 hover:text-white"
-              style={{ background: "#1a162e" }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = l.color;
-                e.currentTarget.style.boxShadow = `0 10px 20px rgba(0,0,0,0.4)`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#1a162e";
-                e.currentTarget.style.boxShadow = "none";
-              }}
               target={l.href.startsWith("http") ? "_blank" : undefined}
               rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              style={{
+                "--brand-color": l.color,
+                "--brand-glow": `0 10px 30px -10px ${l.color}`,
+              }}
+              className="group relative w-16 h-16 rounded-2xl flex items-center justify-center bg-[#151124] border border-[rgba(173,216,230,0.4)] transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-110 hover:border-transparent hover:z-20 hover:bg-(--brand-color) hover:shadow-(--brand-glow)"
             >
-              <span aria-hidden>{l.icon}</span>
+               <span className="relative z-10 transition-transform duration-300 group-hover:scale-110">
+                {l.isCustom ? (
+                  /* Putting LinkedIn SVG */
+                  <div className="w-7 h-7 flex items-center justify-center text-(--brand-color) group-hover:text-white transition-colors duration-300">
+                    {l.icon}
+                  </div>
+                ) : (
+                  /* The other icons */
+                  <div className="relative w-7 h-7">
+                    <img
+                      src={`https://cdn.simpleicons.org/${l.slug}/${l.color.replace("#", "")}`}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300 opacity-100 group-hover:opacity-0"
+                    />
+                    {/* White icons on hover */}
+                    <img
+                      src={`https://cdn.simpleicons.org/${l.slug}/ffffff`}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                    />
+                  </div>
+                )}
+              </span>
+
               {/* Tooltip */}
-              <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 bg-white text-black text-xs font-bold px-2.5 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+              <span className="pointer-events-none absolute -top-14 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-[#1a162e] border border-white/10 text-white text-xs font-bold font-mono tracking-wider opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out whitespace-nowrap shadow-xl">
                 {l.label}
+                {/* The litle triangle*/}
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#1a162e] border-b border-r border-white/10 rotate-45" />
               </span>
             </a>
           ))}
         </div>
-        <p className="text-slate-600 text-sm mt-8">
-          Open to opportunities, collaborations, and good conversations.
+
+        <p
+          className="font-mono text-slate-500 text-sm mt-12 transition-all duration-700 delay-300"
+          style={{ opacity: visible ? 1 : 0 }}
+        >
+          I am open to opportunities, collaborations and good conversations.
         </p>
       </div>
     </section>
   );
 }
 
-// ── Root component ──────────
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// THE MAIN ABOUT PAGE
 export default function AboutPage() {
     return(
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration:0.5, ease: "easeOut"}}
-          className="min-h-screen" style={{ background: "#0f0b1e" }}
-          style={{ background: "#0f0b1e" }}
+          className="min-h-screen" 
         >     
          <ScrollProgress />
          <NavBar topOffset={36} />
@@ -701,8 +922,7 @@ export default function AboutPage() {
            <IntroSection />
            <CredentialsSection />
            <TechSection />
-           <HobbiesSection />
-           <FactsSection />
+           <HobbiesSection />           
            <SocialsSection />
           </main>
         </motion.div>
