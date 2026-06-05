@@ -7,7 +7,7 @@ const PROJECTS = [
     title: "SheriaLens",
     tagline: "Kenyan Legal Assistant Chatbot",
     description:
-      "Justice isn't blind; it just needs the right lens. SheriaLens is a chatbot that deciphers complex legalese into clear, actionable insights, bridging the gap between the code of law and the code of the ordinary mwananchi. SheriaLens is thus an AI-powered assistant that turns hard legal text into plain English. Sherialens is still a work in progress, but the demo version can be accessed via the link below.",
+      "The law isn't blind. It’s hidden behind a wall of impenetrable jargon. Sherialens is a tireless legal research assistant engineered to crack the code of the courtroom. It dives deep into complex legal archives, hunts down relevant precedents and deciphers arcane legalese into clear, actionable power for the ordinary mwananchi. I am actively building the bridge between the code of law and true access to justice. The system is evolving and the first iteration is already live. Click 'Live Preview' to explore my first prototype.",
     skills: ["Python", "NLP", "Transformers", "FastAPI", "RAG", "ChromaDb"],
     github: "https://github.com/BC-254/SheriaLens",
     live: "https://huggingface.co/spaces/BC-254/SheriaLens2",
