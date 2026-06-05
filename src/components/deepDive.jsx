@@ -58,14 +58,14 @@ const CARDS = [
     index: "01",
     label: "Project re-imagined",
     href: "/sherialens",
-    title: "SheriaLens: A Case Study",
+    title: "SheriaLens: The Case Study",
     description:
-      "How do you build an NLP model when your legal corpus is fragmented, vast and structurally inconsistent? A full-depth walkthrough and what it means for access to justice in Kenya.",
+      "The data is massive. The structure is broken. The fragments are scattered. Building an NLP model out of this legal chaos shouldn’t be possible; but it is! Step inside the complete architectural breakdown and discover how taming this algorithmic beast could rewrite the future of access to justice in Kenya.",
     tags: ["NLP", "Kenyan law", "Transformer", "Legal AI"],
     stats: [
-      { val: "Kenya",  lbl: "Country in scope" },
-      { val: "2",   lbl: "Courts currently modelled (KELRC and KEELC)" },
-      { val: "5",  lbl: "The range of years currently covered" },
+      { val: "Kenya",  lbl: "Country" },
+      { val: "2",   lbl: "Courts modelled(KELRC and KEELC)" },
+      { val: "5",  lbl: "Years modelled"},
     ],
     cta: "Enter case study",
     ariaLabel: "Open SheriaLens case study",
@@ -154,13 +154,13 @@ function DestCard({ card, delay }) {
           ))}
         </div>
         {/* Statistics */}
-        <div className="flex gap-6 flex-wrap border-t border-[rgba(200,185,140,0.08)] pt-4 mt-6">
+        <div className="flex justify-between gap-2 border-t border-[rgba(200,185,140,0.08)] pt-4 mt-6">
           {card.stats.map((s) => (
-            <div key={s.lbl}>
-              <span className="block text-xl font-light text-[#c8b98c]">
+            <div key={s.lbl} className="flex-1 flex flex-col items-center text-center">
+              <span className="block text-xl font-light text-[#c8b98c] mb-1">
                 {s.val}
               </span>
-              <span className="text-[0.58rem] tracking-[0.12em] text-[#6b6860] uppercase">
+              <span className="text-[0.58rem] tracking-[0.12em] text-[#6b6860] uppercase leading-tight line-clamp-2">
                 {s.lbl}
               </span>
             </div>
@@ -243,13 +243,13 @@ export default function DeepDive() {
             aria-hidden="true"
             /* Dots and lines connecting the cards */
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-[rgba(200,185,140,0.25)]" /> {/* The circle */}
-            <div className="h-px md:h-auto md:w-px flex-1 min-w-10px md:min-h-10px bg-[rgba(200,185,140,0.10)]" /> {/* The line */}
-            <span className="text-[0.58rem] tracking-[0.14em] text-[#3d3c38] uppercase md:[writing-mode:vertical-rl]">
+            <div className="w-1.5 h-1.5 rounded-full bg-[rgb(252,251,246)]" /> {/* The circle */}
+            <div className="h-px md:h-auto md:w-px flex-1 min-w-10px md:min-h-10px bg-[rgb(252,251,246)]" /> {/* The line */}
+            <span className="text-[0.58rem] tracking-[0.14em] text-[rgba(252,251,246,0.5)] uppercase md:[writing-mode:vertical-rl]">
               and
             </span>
-            <div className="h-px md:h-auto md:w-px flex-1 min-w-10px md:min-h-10px bg-[rgba(200,185,140,0.10)]" /> {/* The bottom line */}
-            <div className="w-1.5 h-1.5 rounded-full bg-[rgba(200,185,140,0.25)]" />    {/* The bottom circle */}
+            <div className="h-px md:h-auto md:w-px flex-1 min-w-10px md:min-h-10px bg-[rgb(252,251,246)]" /> {/* The bottom line */}
+            <div className="w-1.5 h-1.5 rounded-full bg-[rgb(252,251,246)]" />    {/* The bottom circle */}
           </div>
 
           <DestCard card={CARDS[1]} delay={240} />

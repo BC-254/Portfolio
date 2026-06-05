@@ -321,10 +321,7 @@ export default function Projects() {
           {PROJECTS.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}
-        </div>
-
-        
-    
+        </div>    
     </section>
   );
 }
