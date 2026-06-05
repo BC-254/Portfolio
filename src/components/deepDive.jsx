@@ -101,7 +101,7 @@ function DestCard({ card, delay }) {
       aria-label={card.ariaLabel}
       className={[  //Put them in a single list array and join with spaces for easier maintenance
         "group relative flex-1 block no-underline",
-        "p-7 sm:p-9",
+        "p-5 sm:p-9",
         card.roundedClass,
         "border-2 border-blue-400/50", 
         "bg-[#111111]",
@@ -209,10 +209,10 @@ export default function DeepDive() {
         }
       `}</style>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 py-10 sm:py-14">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-10 lg:px-16 pt-4 pb-8 sm:pt-6 sm:pb-14">
 
         {/* Header */}
-        <div className="mb-14 sm:mb-20 flex flex-col items-center text-center mx-auto max-w-2xl"> 
+        <div className="mb-10 sm:mb-20 flex flex-col items-center text-center mx-auto max-w-2xl"> 
         {/* The Eyebrow */}
           <AnimatedEl delay={100}>
             <p className="text-[0.65rem] tracking-[0.22em] text-[#c8b98c] block mb-3 uppercase">
