@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Menu, X, Home, User, Code2, Briefcase, Mail} from 'lucide-react'; 
 
 export default function NavBar({topOffset=0}) {
@@ -8,6 +8,13 @@ export default function NavBar({topOffset=0}) {
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   // Preventing page scroll on mobile once menu is open
   useEffect(() => {
@@ -116,6 +123,14 @@ export default function NavBar({topOffset=0}) {
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
         </div>
+
+        {/* Scroll Progress Bar */}
+        {isHomePage && (
+          <motion.div
+            className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyan-500 origin-left"
+            style={{ scaleX }}
+          />
+        )}
       </nav>
 
       {/* MOBILE MENU DESIGN*/}
