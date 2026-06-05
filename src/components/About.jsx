@@ -675,7 +675,7 @@ function HobbiesSection() {
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20 l -3 15 M80 50 l -3 15 M140 10 l -3 15 M180 80 l -3 15 M50 120 l -3 15 M110 150 l -3 15 M160 130 l -3 15 M10 180 l -3 15' stroke='%238b5cf6' stroke-width='1.5' stroke-linecap='round' stroke-opacity='0.4'/%3E%3C/svg%3E")`,
           backgroundSize: "200px 200px",
-          animation: "rain-fall 1.5s linear infinite",
+          animation: "rain-fall 4.5s linear infinite",
           willChange: "background-position"
         }}
       />
@@ -686,7 +686,7 @@ function HobbiesSection() {
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='150' height='150' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 40 l -4 20 M100 20 l -4 20 M130 90 l -4 20 M60 110 l -4 20' stroke='%2322d3ee' stroke-width='1' stroke-linecap='round' stroke-opacity='0.3'/%3E%3C/svg%3E")`,
           backgroundSize: "150px 150px",
-          animation: "rain-fall 1s linear infinite",
+          animation: "rain-fall 3s linear infinite",
           willChange: "background-position"
         }}
       />      
