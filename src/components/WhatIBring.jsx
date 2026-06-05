@@ -181,6 +181,19 @@ export default function WhatIBring() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+    /* Locking scrolling when mobile drawer is open */
+    useEffect(() => {
+      if (activeSkill) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }, [activeSkill]);
+
+
   /* Tracking the skill currently facing forward */
   const skill = SKILLS[currentFace];
 
@@ -323,7 +336,7 @@ export default function WhatIBring() {
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <span className="font-['DM_Mono',monospace] text-[0.6rem] tracking-[0.2em] text-(--skill-c) block mb-[0.4rem] uppercase">{activeSkill.label}</span>
-                  <h3 className="font-['Syne',sans-serif] text-[1.6rem] font-extrabold text-white/95 m-0 leading-[1.1]">{activeSkill.title}</h3>
+                  <h3 className="text-[1.6rem] font-extrabold text-white/95 m-0 leading-[1.1]">{activeSkill.title}</h3>
                 </div>
                 <button
                   className="w-8 h-8 rounded-full border border-white/10 bg-white/5 text-white/50 text-[0.75rem] cursor-pointer flex items-center justify-center shrink-0 transition-all duration-200 ease-out hover:bg-white/10 hover:text-white/90"
