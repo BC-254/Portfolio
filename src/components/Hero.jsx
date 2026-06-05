@@ -213,7 +213,7 @@ export default function Hero() {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="relative z-10 w-full max-w-3xl space-y-12"
+                className="relative z-10 w-full max-w-3xl space-y-6"
               >
                 <div className="flex flex-col">
                   <motion.p variants={itemVariants} className="font-mono text-[#e83e8c] tracking-[0.2em] text-sm font-bold uppercase mb-2">
@@ -224,14 +224,14 @@ export default function Hero() {
                     Brian Chege
                   </motion.h1>
                   
-                  <motion.h2 variants={itemVariants} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-slate-400 mb-8 font-light">
+                  <motion.h2 variants={itemVariants} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-slate-400 mb-2 font-light">
                     Actuarial Analyst & Data Scientist
                   </motion.h2>
                 </div>
 
                 {/* Catchphrase */}
                 <motion.p variants={catchphraseVariants} className="text-slate-300 text-lg md:text-xl font-sans font-light leading-relaxed max-w-2xl mb-12">
-                  Not just analyzing the risk, I engineer the prediction. 
+                  Risk is a language. I speak it fluently, then teach it to machines. 
                 </motion.p>
 
                 {/* Action Buttons */}
