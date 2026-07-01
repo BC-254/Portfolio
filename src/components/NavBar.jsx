@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Menu, X, Home, User, Code2, Briefcase, Mail} from 'lucide-react'; 
+import { Menu, X, Home, User, Code2, Briefcase, Mail, Scale} from 'lucide-react'; 
 
 export default function NavBar({topOffset=0}) {
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
+  const isSheriaLensPage = location.pathname === '/sherialens';
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { scrollYProgress } = useScroll();
@@ -100,9 +101,18 @@ export default function NavBar({topOffset=0}) {
       <nav className={`fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-cyan-500/20`} style={{ top: topOffset ?? 0 }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           
-          {/* My Brand Initials */}
+          {/* The Initials depending on the page */}
           <Link to="/" className="text-2xl font-bold tracking-widest text-white group flex items-center">
-            B.C<span className="text-cyan-500 animate-pulse ml-1"></span>
+            {isSheriaLensPage ? (
+              <div clasName = "flex gap-2 items-center text-white">
+                <Scale size={24} className="text-[#009A44]" />
+                <span className="tracking-widest uppercase text-lg">SheriaLens</span>
+              </div>
+            ):(
+             <>
+               B.C<span className="text-cyan-500 animate-pulse ml-1"></span>
+             </>
+            )}                 
           </Link>
 
           {/* Desktop Links */}

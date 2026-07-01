@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+
 
 // Scroll-Reveal hook
 function useReveal(threshold = 0.15) {
@@ -95,9 +97,9 @@ function DestCard({ card, delay }) {
   const [ref, visible] = useReveal(0.1);
 
   return (
-    <a    
+    <Link
+      to={card.href}
       ref={ref} //When user scrolls and the card enters the viewport
-      href={card.href}
       aria-label={card.ariaLabel}
       className={[  //Put them in a single list array and join with spaces for easier maintenance
         "group relative flex-1 block no-underline",
@@ -175,7 +177,7 @@ function DestCard({ card, delay }) {
           <ArrowIcon />
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 

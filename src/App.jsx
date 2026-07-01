@@ -12,6 +12,9 @@ import DeepDive from './components/deepDive';
 import Terminal from './components/Terminal';
 import Contact from './components/Contact';
 import About from './components/About';
+import Sherialens from './components/sherialens';
+
+
 
 // Dealing with links navigations
 function ScrollHandler() {
@@ -93,8 +96,9 @@ export default function App() {
                 </main>
               } /> 
 
-              {/* THE ABOUT PAGE ROUTE */}
+              {/* EXTERNAL PAGE ROUTES */}
               <Route path="/about" element={<About />} />
+              <Route path="/sherialens" element={<Sherialens />} />
             </Routes>
           </motion.div>
         )}
