@@ -702,7 +702,7 @@ export default function SheriaLensBrandPage() {
           </div>
         </div>
         <div className="mt-12 sm:mt-16 pt-5 sm:pt-6 border-t border-white/10 flex flex-col items-center justify-center gap-2 text-[10px] sm:text-xs text-zinc-600 font-mono text-center">
-          <span>© 2024 SheriaLens. All rights reserved.</span>
+          <span>© 2026 SheriaLens. All rights reserved.</span>
           <span>Built with precision. Deployed with purpose.</span>
         </div>
       </footer>

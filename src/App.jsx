@@ -13,6 +13,8 @@ import Terminal from './components/Terminal';
 import Contact from './components/Contact';
 import About from './components/About';
 import Sherialens from './components/sherialens';
+import Actuarial from './components/Actuarial';
+
 
 
 
@@ -99,6 +101,7 @@ export default function App() {
               {/* EXTERNAL PAGE ROUTES */}
               <Route path="/about" element={<About />} />
               <Route path="/sherialens" element={<Sherialens />} />
+              <Route path="/actuarial" element={<Actuarial />} />
             </Routes>
           </motion.div>
         )}
