@@ -3,10 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LaserSeam from '../components/laserbeam'; 
 
 
-// CONSTANTS — defined outside the component to prevent re-instantiation on every render. 
 const PARTICLE_DENSITY_DIVISOR = 1500; // px² per particle
-const PARTICLE_CAP = 120;              // hard ceiling — prevents 4K overload
-
+const PARTICLE_CAP = 250;              // hard ceiling; prevents 4K overload
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -158,8 +156,7 @@ export default function SplashScreen({ onInitialize }) {
         )}
       </AnimatePresence>
 
-      {/* BACKGROUND LAYER
-          Fades out when unlocking begins so the shutters close over*/}
+      {/* BACKGROUND LAYER-Fades out when unlocking begins so the shutters close over*/}
       <motion.div
         animate={{ opacity: isUnlocking ? 0 : 1 }}
         transition={{ duration: 0.5 }}
@@ -193,15 +190,10 @@ export default function SplashScreen({ onInitialize }) {
           variants={itemVariants}
           className="text-slate-300 text-lg md:text-xl font-sans font-light leading-relaxed max-w-2xl mx-auto"
         >
-          I don't just model risk; I engineer comprehensive systems and solutions. <br />
-          
+          Engineering innovative algorithms and solutions.          
         </motion.p>
 
         <motion.div variants={itemVariants} className="pt-4">
-          {/* FIX: disabled={isUnlocking} prevents double-click from calling
-              handleSequenceStart twice, setting two competing timeouts, and
-              calling onInitialize() twice. The guard inside handleSequenceStart
-              is a second layer of defence — both are needed. */}
           <button
             onClick={handleSequenceStart}
             disabled={isUnlocking}
