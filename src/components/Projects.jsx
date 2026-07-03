@@ -287,7 +287,7 @@ export default function Projects() {
 
   // Main layout and Background
   return (
-    <section id="featured-projects" className="relative pt-2 pb-0 -mt-8 sm:-mt-12 px-4 sm:px-6 lg:px-8 h-fit text-white">
+    <section id="featured-projects" className="relative pt-4 pb-6 mt-2 sm:mt-8 px-4 sm:px-6 lg:px-8 h-fit text-white border-b border-[#c8b98c]">
       {/* Ambient background behind the cards*/}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-blue-500/20 blur-[120px]" />

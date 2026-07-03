@@ -76,7 +76,7 @@ export default function App() {
                     <WhatIBring />                    
                   </section> 
 
-                  <section id="Work" className="py-24 bg-slate-900/50">
+                  <section id="Work">
                     <Projects />                  
                   </section>
 

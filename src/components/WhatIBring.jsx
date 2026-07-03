@@ -206,7 +206,7 @@ export default function WhatIBring() {
       
       {/* The WIB Section */}
       <section 
-        className="relative h-fit w-full flex flex-col items-center pt-8 px-6 pb-0 overflow-hidden transition-colors duration-900 ease-in-out select-auto box-border before:absolute before:inset-0 before:bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] before:bg-size:[16px_16px] before:bg-position:[0_0] before:pointer-events-none before:z-0" 
+        className="relative h-fit w-full flex flex-col items-center border-b border-[#c8b98c] pt-8 px-6 pb-0 overflow-hidden transition-colors duration-900 ease-in-out select-auto box-border before:absolute before:inset-0 before:bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] before:bg-size:[16px_16px] before:bg-position:[0_0] before:pointer-events-none before:z-0" 
         style={{ backgroundColor: skill.ambientBg }}
       >
        {/* Section titles and eyebrow text */}

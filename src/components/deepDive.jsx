@@ -184,7 +184,7 @@ function DestCard({ card, delay }) {
 export default function DeepDive() {
   return (
     <section
-      className="relative min-h-[92vh] flex items-center overflow-hidden"
+      className="relative min-h-[92vh] flex items-center overflow-hidden border-b border-[#c8b98c]"
       aria-label="Portfolio deep-dive destinations"
     >
       {/* Background grid */}

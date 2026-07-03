@@ -707,7 +707,7 @@ export default function Terminal() {
       {/* The terminal section design */}
       <section
         ref={sectionRef}
-        className="relative w-full px-4 sm:px-6 lg:px-8 pt-8 pb-10 bg-[#0d046d3c] overflow-hidden"
+        className="relative w-full px-4 sm:px-6 lg:px-8 pt-8 pb-10 bg-[#0d046d3c] overflow-hidden border-b border-[#c8b98c]"
         aria-label="Interactive portfolio terminal"
       >
         {/* The glow at the sides of the terminal */}

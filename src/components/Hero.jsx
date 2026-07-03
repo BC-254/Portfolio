@@ -125,7 +125,7 @@ export default function Hero() {
   }, [bootStep, isExpanded]);
 
   return (
-    <div className="min-h-screen w-full bg-[#0a0f1c] flex flex-col pt-20 md:pt-0 overflow-hidden relative selection:bg-cyan-500/30">
+    <div className="min-h-screen w-full bg-[#0a0f1c] flex flex-col pt-20 md:pt-0 overflow-hidden border-b border-[#c8b98c] relative selection:bg-cyan-500/30">
       
       {/* THE TERMINAL */}
       <motion.div
@@ -134,7 +134,7 @@ export default function Hero() {
         className={`flex flex-col relative z-20 ${
           isExpanded
             ? "w-full min-h-screen" 
-            : "w-11/12 max-w-2xl h-75 mx-auto mt-32 rounded-lg border border-cyan-500/30 bg-slate-900/50 shadow-[0_0_40px_rgba(6,182,212,0.1)]" 
+            : "w-11/12 max-w-2xl h-72 mx-auto mt-32 rounded-lg border border-cyan-500/30 bg-slate-900/50 shadow-[0_0_40px_rgba(6,182,212,0.1)]" 
         }`}
       >
         {/* Terminal Window */}
