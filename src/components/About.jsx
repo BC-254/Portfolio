@@ -213,17 +213,10 @@ function IntroSection() {
             <p className="text-[#d4d4d4] flex gap-4">
               <span className="text-[#555] select-none w-4 text-right shrink-0">2</span>
               <span>
-                My technical toolkit includes{" "}
-                <span className="text-[#f472b6]">Python</span> and{" "}
-                <span className="text-[#f472b6]">R</span> for modelling,{" "}
-                <span className="text-[#f472b6]">SQL</span> for data extraction, {" "}
-                <span className="text-[#f472b6]">Power BI</span> and {" "}
-                <span className="text-[#f472b6]">Tableau</span> for storytelling and{" "}
-                <span className="text-[#f472b6]">HTML</span>,{" "}
-                <span className="text-[#f472b6]">CSS</span> &{" "}
-                <span className="text-[#f472b6]">JavaScript</span> for web interfaces.
-                I am currently specializing in building intelligent Android applications using{" "}
-                <span className="text-[#f472b6]">Kotlin</span>.
+                I build machine learning models that find the signal in the noise, craft websites that 
+                feel as good as they look and weave AI directly into products so they think as fast as 
+                they're used. When the story needs to be seen, not just known, I build it out in Power BI
+                and Tableau. This is where your next data-driven decision starts.
               </span>
             </p>
           </div>
