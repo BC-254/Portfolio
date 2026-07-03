@@ -104,7 +104,7 @@ export default function NavBar({topOffset=0}) {
           {/* The Initials depending on the page */}
           <Link to="/" className="text-2xl font-bold tracking-widest text-white group flex items-center">
             {isSheriaLensPage ? (
-              <div clasName = "flex gap-2 items-center text-white">
+              <div className = "flex gap-2 items-center text-white">
                 <Scale size={24} className="text-[#009A44]" />
                 <span className="tracking-widest uppercase text-lg">SheriaLens</span>
               </div>
