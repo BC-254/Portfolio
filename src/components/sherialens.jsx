@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Search, BookOpen, Scale, ArrowRight, Database, Terminal, AlertTriangle, Layers, TrendingUp, Users, Clock, CheckCircle, XCircle, ChevronDown } from 'lucide-react';
+import { Search, BookOpen, Scale, Database, AlertTriangle, Clock, CheckCircle, XCircle, ChevronDown } from 'lucide-react';
 
 // Tickering bar content
 const TICKER_WORDS = [
@@ -101,12 +101,12 @@ const CHALLENGES = [
 // TECH STACK 
 const STACK_ITEMS = [
   { layer: "Ingestion", tech: "Python + BeautifulSoup", note: "Custom eKLR crawlers" },
-  { layer: "Chunking", tech: "LangChain + Custom Rules", note: "Hybrid legal splitter" },
-  { layer: "Embedding", tech: "text-embedding-004", note: "Bilingual EN model" },
-  { layer: "Vector Store", tech: "VectorDB", note: "Millisecond similarity search" },
+  { layer: "Chunking", tech: "Custom Regex Rules", note: "Hybrid legal splitter" },
+  { layer: "Embedding", tech: "BAAI/bge-large-en-v1.5", note: "EN model" },
+  { layer: "Vector Store", tech: "ChromaDB", note: "Millisecond similarity search" },
   { layer: "Retrieval", tech: "RAG Pipeline", note: "Top-K with re-ranking" },
-  { layer: "Generation", tech: "Gemini 1.5 Flash", note: "Grounded synthesis" },
-  { layer: "Frontend", tech: "React + Tailwind", note: "Web + mobile-first" },
+  { layer: "Generation", tech: "Gemini-2.5-flash", note: "Grounded synthesis" },
+  { layer: "Frontend", tech: "Streamlit (hosting on Hugging Face)", note: "Web + mobile-first" },
 ];
 
 // CONTINUOUS TICKER 
@@ -198,12 +198,12 @@ function ResearchUI() {
 function ArchitectureDiagram() {
   const [active, setActive] = useState(null);
   const nodes = [
-    { id: "ingest", label: "Data Ingestion", sub: "eKLR Crawler", x: 60, y: 40, color: "bg-white/10 border-white/20" },
+    { id: "ingest", label: "Data Ingestion", sub: "eKLR Web Scrapers", x: 60, y: 40, color: "bg-white/10 border-white/20" },
     { id: "chunk", label: "Smart Chunker", sub: "Hybrid Splitter", x: 240, y: 40, color: "bg-white/10 border-white/20" },
     { id: "embed", label: "Embedder", sub: "Vector Embeddings", x: 420, y: 40, color: "bg-white/10 border-white/20" },
-    { id: "vector", label: "Vector Store", sub: "Pinecone Index", x: 240, y: 160, color: "bg-white/5 border-white/10" },
+    { id: "vector", label: "Vector Store", sub: "ChromaDB", x: 240, y: 160, color: "bg-white/5 border-white/10" },
     { id: "rag", label: "RAG Pipeline", sub: "Retrieve + Rerank", x: 420, y: 160, color: "bg-white border-zinc-200 text-black" },
-    { id: "llm", label: "Gemini 1.5 Pro", sub: "Grounded Synthesis", x: 600, y: 160, color: "bg-white/5 border-white/10" },
+    { id: "llm", label: "Gemini 2.5 Flash", sub: "Grounded Synthesis", x: 600, y: 160, color: "bg-white/5 border-white/10" },
     { id: "ui", label: "User Interface", sub: "Web + Mobile", x: 420, y: 280, color: "bg-white border-zinc-200 text-black" },
   ];
   const descriptions = {
@@ -272,7 +272,7 @@ function ArchitectureDiagram() {
         )}
         {!active && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-xs sm:text-sm text-zinc-500 py-2 font-mono flex items-center justify-center gap-1">
-            Click any node <span className="md:hidden">or swipe</span>to see more details.
+            Click any node <span className="md:hidden">or swipe</span> to see more details.
           </motion.div>
         )}
       </AnimatePresence>
@@ -349,7 +349,7 @@ export default function SheriaLensBrandPage() {
           style={{ scale: scaleBg, opacity: opacityBg }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none"
         >
-          <Scale size={Math.min(700, typeof window !== "undefined" ? window.innerWidth * 0.85 : 600)} strokeWidth={0.6} className="text-white" />
+          <Scale size={700} strokeWidth={0.6} className="text-white" style={{width: "min(700px, 85vw)", height: "min(700px, 85vw)"}} />
         </motion.div>
 
         {/* Hero Content */}
@@ -481,7 +481,7 @@ export default function SheriaLensBrandPage() {
             </p>
           </div>
           <div className="p-5 sm:p-8 md:p-12 bg-white/70 text-black hover:bg-zinc-100 border-r border-l border-[rgba(173,216,230)] transition-colors group">
-            <div className="text-[10px] sm:text-xs text-zinc mb-6 sm:mb-10 uppercase tracking-widest font-mono">Output {`->`} by SheriaLens</div>
+            <div className="text-[10px] sm:text-xs text-zinc-900 mb-6 sm:mb-10 uppercase tracking-widest font-mono">Output {`->`} by SheriaLens</div>
             <p className="font-sans text-xl sm:text-2xl md:text-3xl font-medium leading-snug">
               "As long as you pay your rent and follow the lease rules, the landlord (or anyone working for them) cannot disturb your peace, interrupt your stay, or force you out of the property."
             </p>
@@ -696,7 +696,7 @@ export default function SheriaLensBrandPage() {
             <a href="https://huggingface.co/spaces/BC-254/SheriaLens2" target="_blank" rel="noopener noreferrer" className="text-sm sm:text-lg hover:text-white text-zinc-400 transition-colors uppercase tracking-widest font-medium border-b border-white/10 md:border-none pb-2 md:pb-0">
               Try Demo ↗
             </a>
-            <Link to="/#Contact" className="text-sm sm:text-lg hover:text-white text-zinc-400 transition-colors uppercase tracking-widest font-medium">
+            <Link to="/" state={{ scrollTo: "Contact" }} className="text-sm sm:text-lg hover:text-white text-zinc-400 transition-colors uppercase tracking-widest font-medium">
               Contact Team ↗
             </Link>
           </div>

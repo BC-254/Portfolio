@@ -15,9 +15,6 @@ import About from './components/About';
 import Sherialens from './components/sherialens';
 import Actuarial from './components/Actuarial';
 
-
-
-
 // Dealing with links navigations
 function ScrollHandler() {
   const location = useLocation();
