@@ -1,16 +1,7 @@
 import { motion } from 'framer-motion';
 
-// ---------------------------------------------------------------------------
-
 // Actuarial symbols that burst outward from the spike point.
-// Each symbol is assigned a direction (left or right) and a random
-// trajectory so no two bursts look identical.
 const ALL_SYMBOLS = ['μ', 'σ²', '∑', 'λ', 'β', 'ρ', 'E[X]', 'VaR', 'N(0,1)', 'p(x)', '∫', 'dF/dx'];
-
-// Generates a deterministic-feeling but varied burst pattern.
-// index drives the direction (even = left, odd = right).
-// spreadX and spreadY are randomised once at module level so they
-// don't change on re-renders — stable values, no flicker.
 const BURST_CONFIG = ALL_SYMBOLS.map((symbol, i) => ({
   symbol,
   x: (i % 2 === 0 ? -1 : 1) * (55 + (i * 13) % 60),
@@ -22,7 +13,7 @@ const BURST_CONFIG = ALL_SYMBOLS.map((symbol, i) => ({
 const EKG_PATH = "M40 0 L40 360 L40 380 L15 410 L65 450 L40 480 L40 900";
 
 export default function LaserSeam() {
-  // Detect mobile to halve the symbol count — keeps burst readable on small screens.
+  // Detect mobile to halve the symbol count; keeps burst readable on small screens.
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 480;
   const symbols = isMobile ? BURST_CONFIG.filter((_, i) => i % 2 === 0) : BURST_CONFIG;
 
@@ -36,9 +27,7 @@ export default function LaserSeam() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3, delay: 0.7 }}
     >
-      {/* ----------------------------------------------------------------
-          SVG LAYER — EKG path + glow filter
-      ---------------------------------------------------------------- */}
+      {/* SVG LAYER — EKG path + glow filter */}
       <svg
         width="80"
         height="100%"
