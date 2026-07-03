@@ -64,7 +64,8 @@ function ScrollProgress() {
       if (!ticking) {
         requestAnimationFrame(() => {
           const el = document.documentElement;
-          const scrolled = el.scrollTop / (el.scrollHeight - el.clientHeight);
+          const denom = el.scrollHeight - el.clientHeight;
+          const scrolled = denom > 0 ? el.scrollTop / denom : 0;
           setProgress(Math.round(scrolled * 100));
           ticking = false;
         });
@@ -72,6 +73,7 @@ function ScrollProgress() {
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll(); // Syncing initial state
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -530,6 +532,7 @@ function TechSection() {
               {/* Left Button */}
               <button 
                 onClick={slideLeft} 
+                aria-label="Scroll technical ecosystem left"
                 className="pointer-events-auto w-10 h-10 rounded-full bg-[#1a162e]/80 backdrop-blur border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:scale-110 transition-all shadow-lg"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -538,6 +541,7 @@ function TechSection() {
               {/* Right Button */}
               <button 
                 onClick={slideRight} 
+                aria-label="Scroll technical ecosystem right"
                 className="pointer-events-auto w-10 h-10 rounded-full bg-[#1a162e]/80 backdrop-blur border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:scale-110 transition-all shadow-lg"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
@@ -764,6 +768,8 @@ function HobbiesSection() {
                       backfaceVisibility: "hidden",
                       transform: "rotateY(180deg)",
                     }}
+                    aria-live="polite"
+                    aria-hidden={!isFlipped}
                   >
                     <h3 className="text-xl font-bold text-white mb-4 pb-3 border-b border-white/60 w-full">
                       {card.backTitle}
@@ -801,7 +807,7 @@ function SocialsSection() {
     },
 
     {
-      href: "https://wa.me/+254780940277",
+      href: "https://wa.me/254780940277",
       label: "WhatsApp",
       color: "#25D366",
       slug: "whatsapp",
