@@ -9,7 +9,7 @@ const SKILLS = [
     color:       '#4a8fe8',
     rgb:         '74, 143, 232',
     ambientBg:   '#04081a',
-    description: 'I proactively identify and evaluate potential vulnerabilities by combining data-driven insights with cross-functional feedback. This ensures my mitigation strategies are equitable, accessible and protect the well-being of the client',
+    description: 'I proactively identify and evaluate potential vulnerabilities by combining data-driven insights with cross-functional feedback. This ensures my mitigation strategies are equitable, accessible and protect the well-being of the client.',
     tools:       ['Hypothesis testing', 'R', 'Product Development & Pricing', 'Lifetimes', 'GLMs', 
                     'Cox PH', 'Regulatory Compliance and Reporting', 'Cashflow Modelling'],
   },
@@ -21,7 +21,7 @@ const SKILLS = [
     rgb:         '0, 212, 192',
     ambientBg:   '#021614',
     description: "I engineer robust machine learning pipelines by meticulously cleaning complex datasets, engineering their features and architecting advanced models. This ensures the algorithms I train are not only structurally sound and highly accurate but also optimized for scalable automation.",
-    tools:       ['Python', 'XGBoost', 'Pandas', 'SQL', 'Scikit-learn', 'TensorFlow', 'Natural Language Processing (NLP)', 'Model Deployment', 'RAG Models'],
+    tools:       ['Python', 'XGBoost', 'Pandas', 'SQL', 'Scikit-learn', 'TensorFlow', 'Natural Language Processing (NLP)', 'Model Deployment', 'RAG Models','Data Preprocessing', 'Feature Engineering', 'Model Evaluation Metrics', 'Hyperparameter Tuning', 'Cross-Validation', 'Ensemble Methods', 'Time Series Forecasting', 'Dimensionality Reduction', 'Huggingface'],
   },
   {
     id:          'analytics',
@@ -30,8 +30,8 @@ const SKILLS = [
     color:       '#f0922b',
     rgb:         '240, 146, 43',
     ambientBg:   '#160900',
-    description: 'Numbers only matter when people understand them. I craft data narratives through interactive dashboards, layered visualisations, web deployments and executive-ready reports that bridge technical depth and strategic clarity. Whether presenting model outputs to non-technical stakeholders or building live analytics tools, insight always reaches the people who need it.',
-    tools:       ['Power BI', 'Tableau', 'Plotly', 'SQL', 'Matplotlib', 'Seaborn', 'Web Deployment'],
+    description: 'Numbers only matter when people understand them. I craft data narratives through interactive dashboards, layered visualisations and executive-ready reports that bridge technical depth and strategic clarity. Whether presenting model outputs to non-technical stakeholders or building live analytics tools, insight always reaches the people who need it. I am also adept at building and deploying web applications to production, ensuring that data-driven insights are accessible and actionable for decision-makers.',
+    tools:       ['Power BI', 'Tableau', 'Plotly', 'SQL', 'Matplotlib', 'Seaborn', 'HTML', 'CSS', 'JavaScript', 'Streamlit', 'Flask'],
   },
 ];
 

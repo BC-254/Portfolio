@@ -77,16 +77,16 @@ const CARDS = [
     index: "02",
     label: "Professional life",
     href: "/actuarial",
-    title: "Actuarial Science",
+    title: "Actuarial Science: The future with AI",
     description:
-      "Risk is not a number but a narrative. Explore the actuarial thinking behind the data: mortality surfaces, ruin probability, credibility theory, and what it means to price uncertainty in an East African market.",
+      "Risk is everywhere. The models are opaque. For 250 years actuaries have turned chaos into certainty. Currently, AI is elbowing in with black-box models that out-predict the old methods. The drawback? They can't explain themselves to a regulator or a grieving family. AI is thus, not replacing the actuary, it's multiplying their capacity to function. Step inside the full breakdown of how a profession built on ledgers and mortality tables is absorbing AI without losing the human judgment that makes any of it trustworthy.",
     tags: ["Mortality tables", "VaR modelling", "Solvency II", "GLM pricing"],
     stats: [
       { val: "∞",    lbl: "Possible futures" },
       { val: "p(ψ)", lbl: "Ruin probability" },
       { val: "KE",   lbl: "Market context" },
     ],
-    cta: "Explore the risk world",
+    cta: "Read the Blog",
     ariaLabel: "Open actuarial professional life section",
     roundedClass: "rounded-2xl md:rounded-l-none md:rounded-r-2xl",
   },
@@ -230,7 +230,7 @@ export default function DeepDive() {
               {/* The Description */}
           <AnimatedEl delay={400}>
             <p className="mt-4 text-sm sm:text-base text-zinc-400 max-w-lg leading-relaxed">
-              The work behind the work. The full case study of SheriaLens and an actuarial sneakpeak into the numbers that govern real risk.
+              The work behind the work. The full case study of SheriaLens and an actuarial sneakpeak into the profession's future with AI.
             </p>
           </AnimatedEl>
         </div>

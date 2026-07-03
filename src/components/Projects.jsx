@@ -5,7 +5,7 @@ const PROJECTS = [
   {
     id: "sheria",
     title: "SheriaLens",
-    tagline: "Kenyan Legal Assistant Chatbot",
+    tagline: "Kenyan Legal Research Assistant Chatbot",
     description:
       "The law isn't blind. It’s hidden behind a wall of impenetrable jargon. Sherialens is a tireless legal research assistant engineered to crack the code of the courtroom. It dives deep into complex legal archives, hunts down relevant precedents and deciphers arcane legalese into clear, actionable power for the ordinary mwananchi. I am actively building the bridge between the code of law and true access to justice. The system is evolving and the first iteration is already live. Click 'Live Preview' to explore my first prototype.",
     skills: ["Python", "NLP", "Transformers", "FastAPI", "RAG", "ChromaDb"],

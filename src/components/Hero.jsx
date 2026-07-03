@@ -231,7 +231,7 @@ export default function Hero() {
 
                 {/* Catchphrase */}
                 <motion.p variants={catchphraseVariants} className="text-slate-300 text-lg md:text-xl font-sans font-light leading-relaxed max-w-2xl mb-12">
-                  Risk is a language. I speak it fluently, then teach it to machines. 
+                  Turning uncertainty into models and models into decisions 
                 </motion.p>
 
                 {/* Action Buttons */}
