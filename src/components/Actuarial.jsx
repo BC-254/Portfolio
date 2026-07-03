@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import {Bot, Gauge, Code2, Globe2, HeartHandshake, GraduationCap, Sparkles, ShieldCheck, HeartPulse, CloudLightning, Lock, LineChart, Quote, ArrowDown,} from "lucide-react";
+import {Bot, Gauge, Code2, HeartHandshake, GraduationCap, Sparkles, HeartPulse, CloudLightning, Lock, LineChart, Quote,} from "lucide-react";
 
 
 const FONT_IMPORT = `
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
-
 .font-display { font-family: 'Fraunces', ui-serif, Georgia, serif; }
 .font-body { font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif; }
 .font-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
@@ -232,7 +230,7 @@ function RiskGauge() {
             color: "#0E7C74" 
           }}
         >
-          ▲ 2013 est.<br/> 20%
+          ▲ 2013 est.<br/> 18%
         </span>
 
         {/* 50% Marker Text */}
@@ -285,7 +283,7 @@ function VisualCard({ children }) {
   return (
     <div
       className="rounded-2xl border p-7 md:p-8"
-      style={{ backgroundColor: "#FFFFFF", borderColor: "#add8e6", boxShadow: "0 1px 0 rgba(20,30,25)" }}
+      style={{ backgroundColor: "#FFFFFF", borderColor: "#add8e6", boxShadow: "0 1px 0 rgb(20,30,25)" }}
     >
       {children}
     </div>
