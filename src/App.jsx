@@ -49,9 +49,10 @@ export default function App() {
 
   return (
     <Router>
+      <Analytics />
       <ScrollHandler/>
       <div className="bg-slate-950 text-slate-200 min-h-screen font-sans selection:bg-cyan-500/30 overflow-x-hidden">
-        <Analytics />
+        
         {/* 1. The Curtain Reveal */}
         <AnimatePresence mode="wait">
             {!isInitialized ? (
