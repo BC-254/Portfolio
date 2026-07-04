@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'; 
 import { AnimatePresence,motion } from 'framer-motion';
+import { Analytics } from "@vercel/analytics/next";
 
 // Importing my portfolio components
 import NavBar from './components/NavBar';
@@ -50,7 +51,7 @@ export default function App() {
     <Router>
       <ScrollHandler/>
       <div className="bg-slate-950 text-slate-200 min-h-screen font-sans selection:bg-cyan-500/30 overflow-x-hidden">
-        
+        <Analytics />
         {/* 1. The Curtain Reveal */}
         <AnimatePresence mode="wait">
             {!isInitialized ? (
