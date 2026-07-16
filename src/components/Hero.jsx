@@ -237,13 +237,13 @@ export default function Hero() {
                 {/* Action Buttons */}
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 pt-4">
                   
-                  <a 
-                    href="#Work"
-                    className="group flex items-center justify-center gap-2 px-8 py-4 bg-[#4f46e5] hover:bg-[#4338ca] text-white rounded-lg font-semibold transition-colors"
+                  <button 
+                    onClick={() => document.getElementById('Work')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="group flex items-center justify-center gap-2 px-8 py-4 bg-[#4f46e5] hover:bg-[#4338ca] text-white rounded-lg font-semibold transition-colors cursor-pointer"
                   >
                     View My Work
                     <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
-                  </a>
+                  </button>
                   
                   <a 
                     href="/Brian_Chege_CV.pdf" 
