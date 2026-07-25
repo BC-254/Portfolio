@@ -124,7 +124,7 @@ function ScrollProgress() {
 //----------------------------------------------------------------------------------------------------------------------
 // THE INTRODUCTION SECTION
 function IntroSection() {
-  const typedText = useTyping("Actuarial Analyst & Data Scientist",60,800);
+  const typedText = useTyping("Actuarial Analyst & AI/ML Engineer",60,800);
   const [ref, visible] = useReveal(0.1);
 
   return (

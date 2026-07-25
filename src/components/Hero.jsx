@@ -225,7 +225,7 @@ export default function Hero() {
                   </motion.h1>
                   
                   <motion.h2 variants={itemVariants} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-slate-400 mb-2 font-light">
-                    Actuarial Analyst & Data Scientist
+                    Actuarial Analyst & AI/ML Engineer
                   </motion.h2>
                 </div>
 
