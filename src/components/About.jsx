@@ -3,6 +3,7 @@ import {motion} from "framer-motion";
 import NavBar from "./NavBar";
 import profilePic from '../assets/Profile_Photo.png';
 import { Code2, Gamepad2, PenTool, Compass} from "lucide-react";
+import Seo from '../components/Seo';
 
 
 // Scroll-reveal animation
@@ -915,6 +916,12 @@ export default function AboutPage() {
           transition={{ duration:0.5, ease: "easeOut"}}
           className="min-h-screen" 
         >     
+         <Seo
+           title="About"
+           description="Learn more about my background, education, and technical ecosystem."
+           image="https://brianchege.com/og/about.png"
+           url="https://brianchege.com/about"
+         />
          <ScrollProgress />
          <NavBar topOffset={36} />
          <main>

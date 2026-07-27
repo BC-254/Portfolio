@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Search, BookOpen, Scale, Database, AlertTriangle, Clock, CheckCircle, XCircle, ChevronDown } from 'lucide-react';
+import Seo from './Seo';
 
 // Tickering bar content
 const TICKER_WORDS = [
@@ -341,6 +342,12 @@ export default function SheriaLensBrandPage() {
 
   return (
     <div className="text-zinc-100 min-h-screen font-sans selection:bg-white selection:text-black overflow-x-hidden bg-[#121212]">
+      <Seo
+        title="SheriaLens"
+        description="The definitive AI legal research assistant built specifically for Kenya."
+        image="https://brianchege.com/og/sherialens.png"
+        url="https://brianchege.com/sherialens"
+      />
 
       {/* The Hero section */}
       <section className={`relative min-h-screen flex flex-col px-5 sm:px-8 md:px-12 border-b border-white pb-16 sm:pb-24 pt-12 overflow-hidden ${bgSoftBlack}`}>

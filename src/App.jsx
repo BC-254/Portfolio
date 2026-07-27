@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AnimatePresence,motion } from 'framer-motion';
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import Seo from './components/Seo';
 
 // Importing my portfolio components
 import NavBar from './components/NavBar';
@@ -74,6 +75,13 @@ export default function App() {
               {/* Main Portfolio Page */}
               <Route path="/" element={
                 <main>
+                  <Seo
+                    title="Brian Chege"
+                    description="Actuarial data scientist and full-stack developer building applications across analytics,NLP and web development."
+                    image="https://brianchege.com/og/home.png"
+                    url="https://brianchege.com"
+                  />
+
                   <div id="Home"><Hero /></div>
                   
                   <section id="Skills">

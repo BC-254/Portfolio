@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import {Bot, Gauge, Code2, HeartHandshake, GraduationCap, Sparkles, HeartPulse, CloudLightning, Lock, LineChart, Quote,} from "lucide-react";
+import Seo from "./Seo";
 
 
 const FONT_IMPORT = `
@@ -294,6 +295,12 @@ function VisualCard({ children }) {
 export default function ActuarialAIBlog() {
   return (
     <div className="font-body min-h-screen" style={{ backgroundColor: "#F2F4F0" }}>
+      <Seo
+        title="Actuarial AI"
+        description="The future of actuarial science in the AI era."
+        image="https://brianchege.com/og/actuarial.png"
+        url="https://brianchege.com/actuarial"
+      />
       <style>{FONT_IMPORT}</style>
 
       {/* The hero sub-section */}
