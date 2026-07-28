@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async'
 
 export default function Seo({ title, description, image, url, schema }) {
-  const fullTitle = `${title} — Brian Chege`
+  const fullTitle = `Brian Chege — ${title}`
   return (
     <Helmet>
       <title>{fullTitle}</title>
