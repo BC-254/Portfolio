@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
-export default function Seo({ title, description, image, url }) {
+export default function Seo({ title, description, image, url, schema }) {
   const fullTitle = `${title} — Brian Chege`
   return (
     <Helmet>
@@ -17,6 +17,13 @@ export default function Seo({ title, description, image, url }) {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+
+      {schema && (
+        <script type="application/ld+json">
+          {JSON.stringify(schema)}
+        </script>
+      )}
     </Helmet>
   )
 }

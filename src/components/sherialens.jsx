@@ -347,6 +347,14 @@ export default function SheriaLensBrandPage() {
         description="The definitive AI legal research assistant built specifically for Kenya."
         image="https://brianchege.com/og/sherialens.png"
         url="https://brianchege.com/sherialens"
+        schema={{
+          "@context": "https://schema.org/",
+          "@type": "SoftwareApplication",
+          "name": "SheriaLens",
+          "applicationCategory": "LegalApplication",
+          "operatingSystem": "Web",
+          "description": "The definitive AI legal research assistant built specifically for Kenya."
+        }}
       />
 
       {/* The Hero section */}

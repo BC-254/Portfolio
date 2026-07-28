@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {Bot, Gauge, Code2, HeartHandshake, GraduationCap, Sparkles, HeartPulse, CloudLightning, Lock, LineChart, Quote,} from "lucide-react";
+import { Bot, Gauge, Code2, HeartHandshake, GraduationCap, Sparkles, HeartPulse, CloudLightning, Lock, LineChart, Quote, } from "lucide-react";
 import Seo from "./Seo";
 
 
@@ -81,7 +81,7 @@ function CurveToNetwork() {
       role="img"
       aria-label="An actuarial decay curve transforming into a connected neural network"
     >
-        {/* Gradient for the curve*/}
+      {/* Gradient for the curve*/}
       <defs>
         <linearGradient id="curveFade" x1="0" x2="1">
           <stop offset="0%" stopColor="#C9A227" stopOpacity="0.95" />
@@ -89,7 +89,7 @@ function CurveToNetwork() {
           <stop offset="100%" stopColor="#3FD0C9" stopOpacity="0.9" />
         </linearGradient>
       </defs>
-      
+
       {/* The curve */}
       <path
         className="curve-path"
@@ -146,7 +146,7 @@ function CurveToNetwork() {
   );
 }
 
-{/* Eyebrow text */}
+{/* Eyebrow text */ }
 function Eyebrow({ children, tone = "gold" }) {
   const color = tone === "gold" ? "#B59410" : "#1E3A8A";
   return (
@@ -156,19 +156,19 @@ function Eyebrow({ children, tone = "gold" }) {
   );
 }
 
-{/* The section Divider*/}
+{/* The section Divider*/ }
 function EntryDivider({ n }) {
   return (
     <div className="flex items-center gap-4 my-2 select-none" aria-hidden="true">
-      <span className="flex-1 h-0.5" style={{ backgroundColor: "#000000"}} />
+      <span className="flex-1 h-0.5" style={{ backgroundColor: "#000000" }} />
       {Array.from({ length: 4 }).map((_, i) => (
-        <span key={i} className="w-px h-1" style={{ backgroundColor: "#000000"}} />
+        <span key={i} className="w-px h-1" style={{ backgroundColor: "#000000" }} />
       ))}
     </div>
   );
 }
 
-{/* The toolkit pills */}
+{/* The toolkit pills */ }
 function Chip({ children }) {
   return (
     <span
@@ -180,7 +180,7 @@ function Chip({ children }) {
   );
 }
 
-{/* The icon badge */}
+{/* The icon badge */ }
 function IconBadge({ Icon, tone = "navy" }) {
   const bg = tone === "navy" ? "#EFF6FF" : "#E9FBF9";
   const fg = tone === "navy" ? "#1E3A8A" : "#0E7C74";
@@ -195,7 +195,7 @@ function IconBadge({ Icon, tone = "navy" }) {
   );
 }
 
-{/* The risk gauge */}
+{/* The risk gauge */ }
 function RiskGauge() {
   const bandStart = 20;
   const bandEnd = 50;
@@ -223,27 +223,27 @@ function RiskGauge() {
       </div>
       <div className="relative h-6 mt-2 font-mono text-[11px] whitespace-nowrap">
         {/* 18% Marker Text */}
-        <span 
-          className="absolute top-0" 
-          style={{ 
-            left: "18%", 
-            transform: "translateX(-4px)", 
-            color: "#0E7C74" 
+        <span
+          className="absolute top-0"
+          style={{
+            left: "18%",
+            transform: "translateX(-4px)",
+            color: "#0E7C74"
           }}
         >
-          ▲ 2013 est.<br/> 18%
+          ▲ 2013 est.<br /> 18%
         </span>
 
         {/* 50% Marker Text */}
-        <span 
-          className="absolute top-0" 
-          style={{ 
-            left: "50%", 
-            transform: "translateX(-4px)", 
-            color: "#0E7C74" 
+        <span
+          className="absolute top-0"
+          style={{
+            left: "50%",
+            transform: "translateX(-4px)",
+            color: "#0E7C74"
           }}
         >
-          ▲ Follow-up est.<br/> 50%
+          ▲ Follow-up est.<br /> 50%
         </span>
 
       </div>
@@ -254,7 +254,7 @@ function RiskGauge() {
   );
 }
 
-{/* The alternating design of the sections */}
+{/* The alternating design of the sections */ }
 function Section({ n, eyebrow, title, children, visual, reverse, tone }) {
   return (
     <section className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-24">
@@ -279,7 +279,7 @@ function Section({ n, eyebrow, title, children, visual, reverse, tone }) {
   );
 }
 
-{/* The cards */}
+{/* The cards */ }
 function VisualCard({ children }) {
   return (
     <div
@@ -296,10 +296,19 @@ export default function ActuarialAIBlog() {
   return (
     <div className="font-body min-h-screen" style={{ backgroundColor: "#F2F4F0" }}>
       <Seo
-        title="Actuarial AI"
+        title="Actuarial Blog"
         description="The future of actuarial science in the AI era."
         image="https://brianchege.com/og/actuarial.png"
         url="https://brianchege.com/actuarial"
+        schema={{
+          "@context": "https://schema.org/",
+          "@type": "Article",
+          "headline": "The future of actuarial science in the AI era",
+          "author": {
+            "@type": "Person",
+            "name": "Brian Chege"
+          }
+        }}
       />
       <style>{FONT_IMPORT}</style>
 
@@ -331,10 +340,10 @@ export default function ActuarialAIBlog() {
           <div className="rise-in mt-14 md:mt-20" style={{ animationDelay: "150ms" }}>
             <CurveToNetwork />
             <div className="flex justify-between font-mono text-[11px] tracking-wide mt-2" style={{ color: "#6E7A7D" }}>
-              <span>the actuarial curve, <br/>since the 18th century</span>
-              <span style={{ color: "#3FD0C9" }}>re-imagined,<br/> for the AI era</span>
+              <span>the actuarial curve, <br />since the 18th century</span>
+              <span style={{ color: "#3FD0C9" }}>re-imagined,<br /> for the AI era</span>
             </div>
-          </div>          
+          </div>
         </div>
       </header>
 
@@ -373,8 +382,8 @@ export default function ActuarialAIBlog() {
         <p>
           At the Casualty Actuarial Society's 2025 Annual Meeting, then-president Dave
           Cummings framed actuaries as a profession that collectively advances its
-          knowledge and builds ethical guardrails to navigate change. This matters 
-          enormously since the thing being built is AI that employers, regulators and 
+          knowledge and builds ethical guardrails to navigate change. This matters
+          enormously since the thing being built is AI that employers, regulators and
           policyholders actually need to trust.
         </p>
         <p>
@@ -410,7 +419,7 @@ export default function ActuarialAIBlog() {
           A 2013 Oxford-Martin study put the odds of actuarial
           automation at roughly one-in-five within a decade or two. A later
           analysis using similar methods pushed that estimate up towards 50%.
-          Worth noting is that researchers tied to AI Impacts and the Future of 
+          Worth noting is that researchers tied to AI Impacts and the Future of
           Humanity Institute have floated even larger figures for automation across
           every occupation. However, these are measured in decades, not fiscal quarters.
         </p>
@@ -451,8 +460,8 @@ export default function ActuarialAIBlog() {
         <p>
           Today's actuaries are being asked to speak a new dialect. This includes and
           not limited to: natural language processing, neural networks,  building machine learning models
-          and data analysis capabilities. Python fluency is moving fast from a "nice to have" 
-          scenario to a table stakes for anyone leading any AI initiative inside an insurer. 
+          and data analysis capabilities. Python fluency is moving fast from a "nice to have"
+          scenario to a table stakes for anyone leading any AI initiative inside an insurer.
           Explainable AI, techniques like SHAP values that pry open a model's black box, is emerging as the standard for
           keeping pricing and underwriting models transparent enough to survive
           regulatory scrutiny.
@@ -522,9 +531,9 @@ export default function ActuarialAIBlog() {
             >
               <Quote size={30} color="#C9A227" className="mb-6" />
               <p className="font-display text-2xl md:text-[1.85rem] leading-normal" style={{ color: "#F2F4F0" }}>
-                Actuaries are the step-down transformers of the AI era. Data scientists can build the reactor while 
-                machine learning provides the raw, boundless voltage. But if a business plugs that raw output straight 
-                into the wall, it blows the entire grid. The actuary is the one who converts chaotic, high-voltage 
+                Actuaries are the step-down transformers of the AI era. Data scientists can build the reactor while
+                machine learning provides the raw, boundless voltage. But if a business plugs that raw output straight
+                into the wall, it blows the entire grid. The actuary is the one who converts chaotic, high-voltage
                 predictions into a current the business can actually use without burning the house down.
               </p>
               <p className="font-mono text-xs tracking-widest uppercase mt-6" style={{ color: "#3FD0C9" }}>
