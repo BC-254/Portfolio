@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Home, User, Code2, Briefcase, Mail } from 'lucide-react'; 
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { Menu, X, Home, User, Code2, Briefcase, Mail, Scale} from 'lucide-react'; 
 
 export default function NavBar({topOffset=0}) {
   const location = useLocation();
