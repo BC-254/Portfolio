@@ -44,8 +44,8 @@ function ScrollHandler() {
 }
 
 export default function App() {
-  // Skip the splash screen for search-engine crawlers so they index real content
-  const isBot = /bot|crawl|spider|slurp|google|bing|yandex|baidu/i.test(navigator.userAgent);
+  // Skip the splash screen for search-engine crawlers and prerenderers so they index real content
+  const isBot = /bot|crawl|spider|slurp|google|bing|yandex|baidu|duckduck|facebook|twitter|linkedin|headlesschrome|prerender/i.test(navigator.userAgent);
   const [isInitialized, setIsInitialized] = useState(
     () => isBot || sessionStorage.getItem('portfolio-boot-seen') === 'true'
   );

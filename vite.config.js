@@ -8,7 +8,7 @@ const plugins = [react(), tailwindcss()]
 if (process.env.PRERENDER === 'true') {
   plugins.push(
     prerender({
-      routes: ['/about', '/sherialens', '/actuarial'],
+      routes: ['/', '/about', '/sherialens', '/actuarial'],
       renderer: '@prerenderer/renderer-puppeteer',
       rendererOptions: {
         renderAfterTime: 3000,
