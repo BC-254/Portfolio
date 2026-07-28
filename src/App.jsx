@@ -77,7 +77,7 @@ export default function App() {
                 <Route path="/" element={
                   <main>
                     <Seo
-                      title="Brian Chege"
+                      title="Actuarial Data Scientist & ML Engineer"
                       description="Actuarial data scientist and full-stack developer building applications across analytics,NLP and web development."
                       image="https://brianchege.com/og/home.png"
                       url="https://brianchege.com"
