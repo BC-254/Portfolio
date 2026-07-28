@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import NavBar from "./NavBar";
-import profilePic from '../assets/Profile_Photo.png';
 import { Code2, Gamepad2, PenTool, Compass } from "lucide-react";
 import Seo from '../components/Seo';
 

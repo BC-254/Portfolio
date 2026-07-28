@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Download, Terminal as TerminalIcon } from 'lucide-react'; 
-import profilePic from '../assets/Profile_Photo.png';
+
 
 // Data within the terminal 
 const bootSequence = [

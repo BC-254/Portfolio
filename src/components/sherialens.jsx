@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Search, BookOpen, Scale, Database, AlertTriangle, Clock, CheckCircle, XCircle, ChevronDown } from 'lucide-react';
 import Seo from './Seo';
 
