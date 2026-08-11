@@ -78,7 +78,7 @@ export default function App() {
                   <main>
                     <Seo
                       title="Actuarial Data Scientist & ML Engineer"
-                      description="Actuarial data scientist and full-stack developer building applications across analytics,NLP and web development."
+                      description="Actuarial Data Scientist and ML Engineer in Nairobi, Kenya. Building intelligent applications across analytics, NLP, AI and web development."
                       image="https://brianchege.com/og/home.png"
                       url="https://brianchege.com"
                       schema={{
