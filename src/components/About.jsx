@@ -203,20 +203,21 @@ function IntroSection() {
               <span>
                 I am a detail-oriented{" "}
                 <span className="text-[#f472b6]">Actuarial Analyst</span> and{" "}
-                <span className="text-[#f472b6]">Certified Data Scientist</span> who bridges
-                the gap between traditional risk assessment and advanced artificial intelligence.
-                I specialize in decoding large-scale datasets, architecting predictive models and
-                translating rigorous statistical analysis into clear, actionable business intelligence.
+                <span className="text-[#f472b6]">Certified Data Scientist</span> who bridges traditional risk 
+                mitigation with modern artificial intelligence. My expertise lies in untangling complex 
+                data ecosystems and designing predictive models that transform rigorous statistical 
+                analysis into high-impact business strategy.
 
               </span>
             </p>
             <p className="text-[#d4d4d4] flex gap-4">
               <span className="text-[#555] select-none w-4 text-right shrink-0">2</span>
               <span>
-                I build machine learning models that find the signal in the noise, craft websites that
-                feel as good as they look and weave AI directly into products so they think as fast as
-                they're used. When the story needs to be seen, not just known, I build it out in Power BI
-                and Tableau. This is where your next data-driven decision starts.
+                At my core, I am a builder driven by a passion for software engineering and systems design. 
+                I specialize in coding scalable architectures and developing agentic AI frameworks that allow 
+                applications to operate dynamically and autonomously. From writing the underlying logic to 
+                surfacing critical insights through Power BI and Tableau, I engineer intelligent systems that 
+                think as fast as they scale.
               </span>
             </p>
           </div>
