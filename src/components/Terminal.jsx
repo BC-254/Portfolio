@@ -510,11 +510,24 @@ export default function Terminal() {
 
 
   // Groq API call 
-  const callGroq = useCallback(async (userInput) => {
+  const callGroq = useCallback(async (userInput, { isSystemPrompt = false } = {}) => {
     setIsThinking(true);
     const aiId = Date.now();
 
     try {
+      // When isSystemPrompt is true, the prompt is an internal instruction
+      // (e.g. from an easter egg) — append it to the system message so the
+      // model treats it as a directive rather than an ambiguous user question.
+      const messages = isSystemPrompt
+        ? [
+            { role: "system", content: `${BRIAN_CONTEXT}\n\nIMPORTANT TASK:\n${userInput}` },
+            { role: "user", content: "Who am I?" }
+          ]
+        : [
+            { role: "system", content: BRIAN_CONTEXT },
+            { role: "user", content: userInput }
+          ];
+
       const response = await fetch(
         "https://api.groq.com/openai/v1/chat/completions",
         {
@@ -525,14 +538,7 @@ export default function Terminal() {
          },
           body: JSON.stringify({
             model: "openai/gpt-oss-120b",
-            messages: [
-                { role:"system",
-                    content: BRIAN_CONTEXT
-                },
-                { role:"user",
-                  content: userInput
-                }
-            ],
+            messages,
             temperature:0.4,
             max_tokens: 400,
         }),
@@ -619,7 +625,7 @@ export default function Terminal() {
       
     if (response.startsWith("__GROQ__:")) {
       const prompt = response.slice("__GROQ__:".length).trim();
-      await callGroq(prompt);
+      await callGroq(prompt, { isSystemPrompt: true });
       return;
     }  
     
