@@ -134,7 +134,7 @@ function HireModal({ onClose, onSent }) {
           "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "llama-3.1-8b-instant",
+          model: "openai/gpt-oss-120b",
           max_tokens: 900,
           temperature: 0.4, // Ensuring a more formal and consistent output
           messages: [{ role: "user", content: OFFER_LETTER_PROMPT(fields) }],
