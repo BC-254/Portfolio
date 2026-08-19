@@ -617,8 +617,8 @@ export default function Terminal() {
         return;
         }
       
-    if (response.startsWith("__GROQ__")) {
-      const prompt = response.slice("__GROQ__".length).trim();
+    if (response.startsWith("__GROQ__:")) {
+      const prompt = response.slice("__GROQ__:".length).trim();
       await callGroq(prompt);
       return;
     }  
