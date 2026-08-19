@@ -524,7 +524,7 @@ export default function Terminal() {
             "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`
          },
           body: JSON.stringify({
-            model: "llama-3.1-8b-instant",
+            model: "openai/gpt-oss-120b",
             messages: [
                 { role:"system",
                     content: BRIAN_CONTEXT
